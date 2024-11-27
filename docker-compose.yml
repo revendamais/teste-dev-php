@@ -12,7 +12,9 @@ services:
             - "3306:3306"
 
     backend:
-        build: .
+        build:
+            context: .
+            dockerfile: Dockerfile
         container_name: backend
         restart: unless-stopped
         volumes:
@@ -27,4 +29,4 @@ services:
         depends_on:
             - mysql-db
         ports:
-            - 8000:80
+            - "8000:80"

@@ -15,8 +15,8 @@ class FornecedorController extends Controller
     public function __construct(FornecedoresRepositoryInterface $fornecedorRepository)
     {
         $this->fornecedorRepository = $fornecedorRepository;
-    }
 
+    }
     public function create(FornecedorRequestCreate $request): JsonResponse
     {
         $validatedData = $request->validated();
