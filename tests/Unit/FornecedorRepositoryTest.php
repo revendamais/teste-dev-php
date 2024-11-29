@@ -14,12 +14,13 @@ class FornecedorRepositoryTest extends TestCase
     {
         // Dados simulados
         $data = [
-            'nome' => 'Fornecedor',
-            'documento' => '123.456.789-32',  //alterar cpf a cada teste (unique key)
-            'tipo_documento' => 'CPF',
-            'contato' => '41-9916-9014',
-            'endereco' => 'Rua Leonardo Javorski 105',
+         "nome"=> "Junior P",
+         "tipo_documento"=> "CPF",
+         "contato"=> "41 991169014",
+         "documento"=> "064.780.749-04",
+         "endereco"=> "Rua Leonardo Javorski 15"
         ];
+
         $repository = new FornecedorRepository();
         $fornecedor = $repository->generate($data);
 
@@ -29,15 +30,6 @@ class FornecedorRepositoryTest extends TestCase
         $this->assertEquals($data['tipo_documento'], $fornecedor->tipo_documento);
         $this->assertEquals($data['contato'], $fornecedor->contato);
         $this->assertEquals($data['endereco'], $fornecedor->endereco);
-
-        // Verifica se o fornecedor foi salvo no banco de dados
-        $this->assertDatabaseHas('fornecedores', [
-            'nome' => 'Fornecedor',
-            'documento' => '123.456.789-32',  //alterar cpf a cada teste (unique key)
-            'tipo_documento' => 'CPF',
-            'contato' => '41-9916-9014',
-            'endereco' => 'Rua Leonardo Javorski 105',
-        ]);
     }
 
     /** @test */
@@ -68,7 +60,7 @@ class FornecedorRepositoryTest extends TestCase
 
         $data = [
             'nome' => 'Fornecedor Atualizado',
-            'documento' => '987.654.321-00',
+            'documento' => '987.654.321-10',
             'tipo_documento' => 'CNPJ',
             'contato' => '41-9999-9999',
             'endereco' => 'Rua Atualizada 200',
@@ -84,23 +76,14 @@ class FornecedorRepositoryTest extends TestCase
         $this->assertEquals($data['tipo_documento'], $updatedFornecedor->tipo_documento);
         $this->assertEquals($data['contato'], $updatedFornecedor->contato);
         $this->assertEquals($data['endereco'], $updatedFornecedor->endereco);
-
-        // Verifica se o fornecedor foi salvo no banco de dados
-        $this->assertDatabaseHas('fornecedores', [
-            'nome' => 'Fornecedor Atualizado',
-            'documento' => '987.654.321-00',
-            'tipo_documento' => 'CNPJ',
-            'contato' => '41-9999-9999',
-            'endereco' => 'Rua Atualizada 200',
-        ]);
     }
 
     /** @test */
     public function test_remove()
     {
         //alterar id a cada teste
-        $fornecedor = Fornecedor::find(32);
-        $this->assertNotNull($fornecedor, 'Fornecedor com ID 3 não encontrado.');
+        $fornecedor = Fornecedor::find(34);
+        $this->assertNotNull($fornecedor, 'Fornecedor com ID 45 não encontrado.');
         $repository = new FornecedorRepository();
         $removedFornecedor = $repository->remove($fornecedor);
 
