@@ -23,16 +23,16 @@ class SupplierUpdateRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'nome' => ['required', 'string', 'max:255'],
-            'empresa' => ['required', 'string', 'max:255', 'unique:suppliers:'],
+            'name' => ['required', 'string', 'max:255'],
+            'company' => ['required', 'string', 'max:255', 'unique:suppliers:'],
             'cnpjcpf' => ['required', 'string', 'max:255', 'unique:suppliers'],
-            'telefone' => ['required', 'string', 'max:255', 'unique:suppliers'],
+            'phone' => ['required', 'string', 'max:255', 'unique:suppliers'],
             'email' => ['required', 'string', 'max:255', 'unique:suppliers'],
-            'endereco' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
         ];
 
         if($this->method() === 'PUT') {
-            $rules['empresa'] = [
+            $rules['company'] = [
                 'required',
                 'max:255',
                 'string',
@@ -44,7 +44,7 @@ class SupplierUpdateRequest extends FormRequest
                 'string',
                 Rule::unique('suppliers')->ignore($this->id),
             ];
-            $rules['telefone'] = [
+            $rules['phone'] = [
                 'required',
                 'max:255',
                 'string',

@@ -22,12 +22,12 @@ class SupplierStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|max:255',
-            'empresa' => 'required|max:255|unique:suppliers',
+            'name' => 'required|max:255',
+            'company' => 'required|max:255|unique:suppliers',
             'cnpjcpf' => 'required|max:14|unique:suppliers',
-            'telefone' => 'required|max:14|unique:suppliers',
+            'phone' => 'required|max:14|unique:suppliers',
             'email' => 'required|max:255|unique:suppliers',
-            'endereco' => 'required|max:255',
+            'address' => 'required|max:255',
         ];
     }
 }

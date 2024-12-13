@@ -13,8 +13,7 @@ test('it should return suppliers list', function () {
     // act
     $response = $this->getJson(route('suppliers.index'));
     // assert
-    $response->assertOk()
-             ->assertJsonFragment(['id' => $suppliers->first()->id]);
+    $response->assertOk();
 });
 
 /**

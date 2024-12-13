@@ -7,24 +7,24 @@ use App\Http\Requests\SupplierStoreRequest;
 class CreateDTO
 {
     public function __construct(
-        public string $nome,
-        public string $empresa,
+        public string $name,
+        public string $company,
         public string $cnpjcpf,
-        public string $telefone,
+        public string $phone,
         public string $email,
-        public string $endereco,
+        public string $address,
     )
     {}
 
     public static function makeFromRequest(SupplierStoreRequest $request): self
     {
         return new self(
-            $request->nome,
-            $request->empresa,
+            $request->name,
+            $request->company,
             $request->cnpjcpf,
-            $request->telefone,
+            $request->phone,
             $request->email,
-            $request->endereco
+            $request->address
         );
     }
 }

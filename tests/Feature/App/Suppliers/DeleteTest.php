@@ -11,12 +11,12 @@ test('it should delete the supplier', function () {
 
     $this->assertDatabaseHas(Supplier::class, [
         'id' => $supplier->id,
-        'nome' => $supplier->nome,
-        'empresa' => $supplier->empresa,
+        'name' => $supplier->name,
+        'company' => $supplier->company,
         'cnpjcpf' => $supplier->cnpjcpf,
-        'telefone' => $supplier->telefone,
+        'phone' => $supplier->phone,
         'email' => $supplier->email,
-        'endereco' => $supplier->endereco,
+        'address' => $supplier->address,
     ]);
 
     $response = $this->deleteJson(route('suppliers.destroy', ['id' => $supplier->id]));

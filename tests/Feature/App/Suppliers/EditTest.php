@@ -11,33 +11,33 @@ test('it should edit the supplier', function () {
 
     $this->assertDatabaseHas(Supplier::class, [
         'id' => $supplier->id,
-        'nome' => $supplier->nome,
-        'empresa' => $supplier->empresa,
+        'name' => $supplier->name,
+        'company' => $supplier->company,
         'cnpjcpf' => $supplier->cnpjcpf,
-        'telefone' => $supplier->telefone,
+        'phone' => $supplier->phone,
         'email' => $supplier->email,
-        'endereco' => $supplier->endereco,
+        'address' => $supplier->address,
     ]);
 
     $payload = [
-        'nome' => $data->nome,
-        'empresa' => $data->empresa,
+        'name' => $data->name,
+        'company' => $data->company,
         'cnpjcpf' => $data->cnpjcpf,
-        'telefone' => $data->telefone,
+        'phone' => $data->phone,
         'email' => $data->email,
-        'endereco' => $data->endereco,
+        'address' => $data->address,
     ];
 
     $response = $this->putJson(route('suppliers.update', ['id' => $supplier->id]), $payload);
 
     $this->assertDatabaseHas(Supplier::class, [
         'id' => $supplier->id,
-        'nome' => $data->nome,
-        'empresa' => $data->empresa,
+        'name' => $data->name,
+        'company' => $data->company,
         'cnpjcpf' => $data->cnpjcpf,
-        'telefone' => $data->telefone,
+        'phone' => $data->phone,
         'email' => $data->email,
-        'endereco' => $data->endereco,
+        'address' => $data->address,
     ]);
 
     $response->assertOk();
