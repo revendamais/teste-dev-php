@@ -1,8 +1,13 @@
 <?php
 
+namespace Tests\Feature\App\Suppliers;
+
+use App\Models\Supplier;
+
 /**
 * This return a suppliers list
 */
+
 it('it should return suppliers list', function () {
     // arrange
     $suppliers = Supplier::factory()->count(3)->create();
