@@ -1,8 +1,11 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Models\Supplier;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::prefix('v1')->group(function () {
+    Route::get('/suppliers', function () {
+        $suppliers = Supplier::all();
+        return response()->json(['data' => $suppliers]);
+    })->name('suppliers.index');
+});
