@@ -11,7 +11,7 @@ class Supplier extends Model
     /** @use HasFactory<\Database\Factories\SupplierFactory> */
     use HasFactory;
     protected $fillable = [
-        'nome',
+        'name',
         'empresa',
         'cnpjcpf',
         'telefone',
@@ -19,9 +19,39 @@ class Supplier extends Model
         'endereco',
     ];
 
-    // Filtro para ordenação (orderBy)
+    // ordination filter by "asc" and "desc" to fields
     public function scopeOrderByParam(Builder $query, string $field = 'id', string $direction = 'desc'): Builder
     {
         return $query->orderBy($field, strtolower($direction) === 'asc' ? 'asc' : 'desc');
+    }
+
+    // company filters
+    public function scopeFilterByCompany(Builder $query, string $company = null): Builder
+    {
+        if ($company) {
+            $query->where('company', 'like', "%{$company}%");
+        }
+
+        return $query;
+    }
+
+    // CNPJ/CPF filter
+    public function scopeFilterByCnpjCpf(Builder $query, string $cnpjcpf = null): Builder
+    {
+        if ($cnpjcpf) {
+            $query->where('cnpjcpf', 'like', "%{$cnpjcpf}%");
+        }
+
+        return $query;
+    }
+
+    // e-mail filter
+    public function scopeFilterByEmail(Builder $query, string $email = null): Builder
+    {
+        if ($email) {
+            $query->where('email', 'like', "%{$email}%");
+        }
+
+        return $query;
     }
 }
