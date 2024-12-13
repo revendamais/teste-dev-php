@@ -6,15 +6,16 @@ use App\DTO\Suppliers\CreateDTO;
 use App\DTO\Suppliers\UpdateDTO;
 use App\Models\Supplier;
 use App\Repositories\Suppliers\SupplierRepositoryInterface;
+use Illuminate\Http\Request;
 
 class SupplierService
 {
     public function __construct(protected SupplierRepositoryInterface $repository)
     {}
 
-    public function all(): array
+    public function all(Request $request): array
     {
-        return $this->repository->all();
+        return $this->repository->all($request);
     }
 
     public function show(int $id): array

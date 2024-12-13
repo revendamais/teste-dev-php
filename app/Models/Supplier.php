@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Supplier extends Model
 {
@@ -17,4 +18,10 @@ class Supplier extends Model
         'email',
         'endereco',
     ];
+
+    // Filtro para ordenação (orderBy)
+    public function scopeOrderByParam(Builder $query, string $field = 'id', string $direction = 'desc'): Builder
+    {
+        return $query->orderBy($field, strtolower($direction) === 'asc' ? 'asc' : 'desc');
+    }
 }

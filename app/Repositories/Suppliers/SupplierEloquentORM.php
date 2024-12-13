@@ -6,6 +6,7 @@ use App\DTO\Suppliers\CreateDTO;
 use App\DTO\Suppliers\UpdateDTO;
 use App\Models\Supplier;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class SupplierEloquentORM implements SupplierRepositoryInterface
@@ -15,10 +16,12 @@ class SupplierEloquentORM implements SupplierRepositoryInterface
     )
     {}
 
-    public function all(): array
+    public function all(Request $request): array
     {
         try {
-            $suppliers = Supplier::paginate(10);
+            $suppliers = $this->supplier->query()
+                ->orderByParam($request->query('orderByField') ?? 'id', $request->query('orderByDirection') ?? 'desc')
+                ->paginate(10);
             return [
                 'data' => $suppliers,
                 'status' => 200

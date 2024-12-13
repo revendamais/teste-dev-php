@@ -17,7 +17,7 @@ class SuppliersController extends Controller
 
     public function index(Request $request): JsonResponse
     {
-        $suppliers = $this->supplierService->all();
+        $suppliers = $this->supplierService->all($request);
         return response()->json($suppliers, $suppliers['status']);
     }
 
