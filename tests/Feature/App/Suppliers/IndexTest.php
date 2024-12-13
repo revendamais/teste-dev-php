@@ -8,9 +8,9 @@ use App\Models\Supplier;
 * This return a suppliers list
 */
 
-it('it should return suppliers list', function () {
+test('it should return suppliers list', function () {
     // arrange
-    $suppliers = Supplier::factory()->count(3)->create();
+    $suppliers = Supplier::factory()->make();
     // act
     $response = $this->getJson(route('suppliers.index'));
     // assert
