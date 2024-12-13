@@ -24,7 +24,7 @@ class SupplierEloquentORM implements SupplierRepositoryInterface
                 ->filterByCompany($request->query('company') ?? null)
                 ->filterByCnpjCpf($request->query('cnpjcpf') ?? null)
                 ->filterByEmail($request->query('email') ?? null)
-                ->paginate(10);
+                ->paginate($request->query('paginate') ?? 10);
             return [
                 'data' => $suppliers,
                 'status' => 200
