@@ -8,4 +8,5 @@ Route::prefix('v1')
     ->group(function () {
     Route::get('/suppliers', 'index')->name('suppliers.index');
     Route::post('/suppliers', 'store')->name('suppliers.store');
+    Route::put('/suppliers/{id}', 'update')->name('suppliers.update');
 });

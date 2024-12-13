@@ -2,7 +2,7 @@
 
 namespace App\DTO\Suppliers;
 
-use App\Http\Requests\SupplierRequest;
+use App\Http\Requests\SupplierStoreRequest;
 
 class CreateDTO
 {
@@ -16,7 +16,7 @@ class CreateDTO
     )
     {}
 
-    public static function makeFromRequest(SupplierRequest $request): self
+    public static function makeFromRequest(SupplierStoreRequest $request): self
     {
         return new self(
             $request->nome,

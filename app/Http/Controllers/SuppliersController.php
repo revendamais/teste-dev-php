@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\DTO\Suppliers\CreateDTO;
-use App\Http\Requests\SupplierRequest;
+use App\DTO\Suppliers\UpdateDTO;
+use App\Http\Requests\SupplierStoreRequest;
+use App\Http\Requests\SupplierUpdateRequest;
+use App\Models\Supplier;
 use App\Services\Suppliers\SupplierService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -19,12 +22,21 @@ class SuppliersController extends Controller
         return response()->json($suppliers, $suppliers['status']);
     }
 
-    public function store(SupplierRequest $request): JsonResponse
+    public function store(SupplierStoreRequest $request): JsonResponse
     {
         $supplier = $this->supplierService->create(
             CreateDTO::makeFromRequest($request)
         );
 
+        return response()->json($supplier, $supplier['status']);
+    }
+
+    public function update(SupplierUpdateRequest $request, int $id): JsonResponse
+    {
+        $supplier = $this->supplierService->update(
+            UpdateDTO::makeFromRequest($request),
+            $id
+        );
         return response()->json($supplier, $supplier['status']);
     }
 }

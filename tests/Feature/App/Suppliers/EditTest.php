@@ -28,7 +28,7 @@ test('it should edit the supplier', function () {
         'endereco' => $data->endereco,
     ];
 
-    $response = $this->putJson(route('suppliers.edit', ['supplier' => $supplier->id]), $payload);
+    $response = $this->putJson(route('suppliers.update', ['id' => $supplier->id]), $payload);
 
     $this->assertDatabaseHas(Supplier::class, [
         'id' => $supplier->id,

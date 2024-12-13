@@ -3,6 +3,7 @@
 namespace App\Services\Suppliers;
 
 use App\DTO\Suppliers\CreateDTO;
+use App\DTO\Suppliers\UpdateDTO;
 use App\Models\Supplier;
 use App\Repositories\Suppliers\SupplierRepositoryInterface;
 
@@ -19,5 +20,10 @@ class SupplierService
     public function create(CreateDTO $dto): array
     {
         return $this->repository->create($dto);
+    }
+
+    public function update(UpdateDTO $dto, int $id): array
+    {
+        return $this->repository->update($dto, $id);
     }
 }

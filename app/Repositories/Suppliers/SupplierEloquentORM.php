@@ -3,6 +3,7 @@
 namespace App\Repositories\Suppliers;
 
 use App\DTO\Suppliers\CreateDTO;
+use App\DTO\Suppliers\UpdateDTO;
 use App\Models\Supplier;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -47,6 +48,34 @@ class SupplierEloquentORM implements SupplierRepositoryInterface
             return [
                 'data' => [],
                 'message' => "An error occurred while creating new supplier",
+                'status' => 500,
+            ];
+        }
+    }
+
+    public function update(UpdateDTO $dto, int $id): array
+    {
+        try {
+            $supplier = $this->supplier->find($id);
+
+            if (!$supplier) {
+                return [
+                    'data' => [],
+                    'message' => "Supplier not found",
+                    'status' => 404
+                ];
+            }
+            $data = (array) $dto;
+            $supplier->update($data);
+            return [
+                'data' => $supplier->toArray(),
+                'status' => 200
+            ];
+        } catch (Exception $e) {
+            Log::channel('dbException')->error('Error in update supplier', ['error' => $e->getMessage()]);
+            return [
+                'data' => [],
+                'message' => "An error occurred while updating supplier",
                 'status' => 500,
             ];
         }
