@@ -17,6 +17,11 @@ class SupplierService
         return $this->repository->all();
     }
 
+    public function show(int $id): array
+    {
+        return $this->repository->show($id);
+    }
+
     public function create(CreateDTO $dto): array
     {
         return $this->repository->create($dto);

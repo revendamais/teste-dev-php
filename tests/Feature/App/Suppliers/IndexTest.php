@@ -16,3 +16,16 @@ test('it should return suppliers list', function () {
     $response->assertOk()
              ->assertJsonFragment(['id' => $suppliers->first()->id]);
 });
+
+/**
+ * This return a supplier by id
+ */
+
+test('it should return a supplier by id', function () {
+    $supplier = Supplier::first();
+
+    $response = $this->getJson(route('suppliers.show', ['id' => $supplier->id]));
+
+    $response->assertOk()
+        ->assertJsonFragment(['id' => $supplier->first()->id]);
+});

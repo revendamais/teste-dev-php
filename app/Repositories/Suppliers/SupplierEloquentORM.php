@@ -33,6 +33,24 @@ class SupplierEloquentORM implements SupplierRepositoryInterface
         }
     }
 
+    public function show(int $id): array
+    {
+        try {
+            $supplier = $this->supplier->findOrFail($id);
+            return [
+                'data' => $supplier->toArray(),
+                'status' => 200
+            ];
+        } catch (Exception $e) {
+            Log::channel('dbException')->error('Error in retrieving supplier', ['error' => $e->getMessage()]);
+            return [
+                'data' => [],
+                'message' => "An error occurred while retrieving the supplier list",
+                'status' => 500,
+            ];
+        }
+    }
+
     public function create(CreateDTO $dto): array
     {
         try {
@@ -79,5 +97,10 @@ class SupplierEloquentORM implements SupplierRepositoryInterface
                 'status' => 500,
             ];
         }
+    }
+
+    public function delete(int $id): array
+    {
+
     }
 }

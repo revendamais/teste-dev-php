@@ -6,7 +6,6 @@ use App\DTO\Suppliers\CreateDTO;
 use App\DTO\Suppliers\UpdateDTO;
 use App\Http\Requests\SupplierStoreRequest;
 use App\Http\Requests\SupplierUpdateRequest;
-use App\Models\Supplier;
 use App\Services\Suppliers\SupplierService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,6 +19,12 @@ class SuppliersController extends Controller
     {
         $suppliers = $this->supplierService->all();
         return response()->json($suppliers, $suppliers['status']);
+    }
+
+    public function show(int $id): JsonResponse
+    {
+        $supplier = $this->supplierService->show($id);
+        return response()->json($supplier, $supplier['status']);
     }
 
     public function store(SupplierStoreRequest $request): JsonResponse

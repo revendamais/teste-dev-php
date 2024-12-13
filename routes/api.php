@@ -9,4 +9,5 @@ Route::prefix('v1')
     Route::get('/suppliers', 'index')->name('suppliers.index');
     Route::post('/suppliers', 'store')->name('suppliers.store');
     Route::put('/suppliers/{id}', 'update')->name('suppliers.update');
+    Route::get('/suppliers/{id}', 'show')->name('suppliers.show');
 });
