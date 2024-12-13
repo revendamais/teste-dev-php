@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Supplier;
-use App\Services\SupplierService;
+use App\Services\Suppliers\SupplierService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class SuppliersController extends Controller
 {

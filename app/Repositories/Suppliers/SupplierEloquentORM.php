@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Repositories\Suppliers;
 
 use App\Models\Supplier;
 
-class SupplierService
+class SupplierEloquentORM implements SupplierRepositoryInterface
 {
+
     public function all(): array
     {
         $suppliers = Supplier::all();
