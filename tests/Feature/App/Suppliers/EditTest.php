@@ -11,7 +11,6 @@ test('it should edit the supplier', function () {
 
     $this->assertDatabaseHas(Supplier::class, [
         'id' => $supplier->id,
-        'name' => $supplier->name,
         'company' => $supplier->company,
         'cnpjcpf' => $supplier->cnpjcpf,
         'phone' => $supplier->phone,
@@ -20,7 +19,6 @@ test('it should edit the supplier', function () {
     ]);
 
     $payload = [
-        'name' => $data->name,
         'company' => $data->company,
         'cnpjcpf' => $data->cnpjcpf,
         'phone' => $data->phone,
@@ -32,7 +30,6 @@ test('it should edit the supplier', function () {
 
     $this->assertDatabaseHas(Supplier::class, [
         'id' => $supplier->id,
-        'name' => $data->name,
         'company' => $data->company,
         'cnpjcpf' => $data->cnpjcpf,
         'phone' => $data->phone,

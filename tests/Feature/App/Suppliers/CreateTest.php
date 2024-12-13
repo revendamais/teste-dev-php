@@ -7,7 +7,6 @@ namespace Tests\Feature\App\Suppliers;
  */
 it('should insert a new supplier', function () {
     $payload = [
-        'name' => 'Joe',
         'company' => 'Empresa 1',
         'cnpjcpf' => '12345678900000',
         'phone' => '61999999999',
@@ -20,7 +19,6 @@ it('should insert a new supplier', function () {
     $response->assertStatus(201);
 
     $response->assertJsonFragment([
-        'name' => 'Joe',
         'company' => 'Empresa 1',
         'cnpjcpf' => '12345678900000',
         'phone' => '61999999999',

@@ -42,7 +42,7 @@ class SupplierEloquentORM implements SupplierRepositoryInterface
     public function show(int $id): array
     {
         try {
-            $supplier = $this->supplier->findOrFail($id);
+            $supplier = $this->supplier->find($id);
             if (!$supplier)
             {
                 return [
@@ -116,7 +116,7 @@ class SupplierEloquentORM implements SupplierRepositoryInterface
     public function destroy(int $id): array
     {
         try {
-            $supplier = $this->supplier->findOrFail($id);
+            $supplier = $this->supplier->find($id);
             if (!$supplier) {
                 return [
                     'data' => [],

@@ -7,7 +7,6 @@ use App\Http\Requests\SupplierUpdateRequest;
 class UpdateDTO
 {
     public function __construct(
-        public string $name,
         public string $company,
         public string $cnpjcpf,
         public string $phone,
@@ -19,7 +18,6 @@ class UpdateDTO
     public static function makeFromRequest(SupplierUpdateRequest $request): self
     {
         return new self(
-            $request->name,
             $request->company,
             $request->cnpjcpf,
             $request->phone,

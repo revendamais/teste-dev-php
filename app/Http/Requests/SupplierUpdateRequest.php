@@ -23,7 +23,6 @@ class SupplierUpdateRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'name' => ['required', 'string', 'max:255'],
             'company' => ['required', 'string', 'max:255', 'unique:suppliers:'],
             'cnpjcpf' => ['required', 'string', 'max:255', 'unique:suppliers'],
             'phone' => ['required', 'string', 'max:255', 'unique:suppliers'],
