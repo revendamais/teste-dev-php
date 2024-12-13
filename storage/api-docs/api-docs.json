@@ -1,0 +1,303 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Reserva Online API",
+        "description": "Test Reserva Online",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1",
+            "description": "Test rese"
+        }
+    ],
+    "paths": {
+        "/api/v1/suppliers": {
+            "get": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "Get all suppliers",
+                "description": "Gets a list of all suppliers of paginate or with filters.",
+                "operationId": "b69ffc33e3202e0ad65f084759a94930",
+                "parameters": [
+                    {
+                        "name": "orderByDirection",
+                        "in": "query",
+                        "description": "Filter suppliers orderBY asc or desc.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "orderByField",
+                        "in": "query",
+                        "description": "Filter suppliers field selected.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "company",
+                        "in": "query",
+                        "description": "Filter suppliers by company.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "cnpjcpf",
+                        "in": "query",
+                        "description": "Filter suppliers by cnpjcpf.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Filter suppliers by e-mail.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "paginate",
+                        "in": "query",
+                        "description": "Informs the number of items per page.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of all locations"
+                    },
+                    "500": {
+                        "description": "An error occurred in the listing of the locations."
+                    }
+                }
+            }
+        },
+        "/api/v1/suppliers/{id}": {
+            "get": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "Get a supplier by id",
+                "description": "Get a supplier by id parameter",
+                "operationId": "d221da767551150c2ffdfd95cd478939",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the supplier.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Supplier info."
+                    },
+                    "404": {
+                        "description": "No supplier found with the specified id."
+                    },
+                    "500": {
+                        "description": "An error occurred while retrieving the supplier list."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "Delete a supplier by id",
+                "description": "Delete a supplier by id parameter",
+                "operationId": "9a273eda6575766e442e860406c6bb7e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the supplier",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "supplier successfully deleted."
+                    },
+                    "404": {
+                        "description": "No supplier found with the specified id."
+                    },
+                    "500": {
+                        "description": "An error occurred in the deleted of the supplier."
+                    }
+                }
+            }
+        },
+        "/v1/suppliers": {
+            "post": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "Create new supplier",
+                "description": "Create a new supplier",
+                "operationId": "f53aad169e7f6af36c0639c56dfcfe2c",
+                "parameters": [
+                    {
+                        "name": "company",
+                        "in": "query",
+                        "description": "Company name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "cnpjcpf",
+                        "in": "query",
+                        "description": "CNPJ or CPF",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Supplier phone",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Supplier e-mail",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "address",
+                        "in": "query",
+                        "description": "Supplier address",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Supplier successfully created."
+                    },
+                    "422": {
+                        "description": "The {company, cnpjcpf, phone, email} has already been taken or param is required and unique."
+                    },
+                    "500": {
+                        "description": "An error occurred in the creation of the supplier."
+                    }
+                }
+            }
+        },
+        "/v1/suppliers/{id}": {
+            "put": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "Update supplier",
+                "description": "Update a supplier",
+                "operationId": "8eefd70511a23a18be6aeca64d8ee535",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Supplier ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "company",
+                        "in": "query",
+                        "description": "Company name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "cnpjcpf",
+                        "in": "query",
+                        "description": "CNPJ or CPF",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Supplier phone",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Supplier e-mail",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "address",
+                        "in": "query",
+                        "description": "Supplier address",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Supplier successfully updated."
+                    },
+                    "422": {
+                        "description": "The {company, cnpjcpf, phone, email} has already been taken or param is required."
+                    },
+                    "500": {
+                        "description": "An error occurred in the creation of the supplier."
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Suppliers",
+            "description": "Suppliers"
+        }
+    ]
+}
