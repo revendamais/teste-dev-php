@@ -35,5 +35,7 @@ it('should insert a new supplier', function () {
     $this->assertDatabaseHas('suppliers', [
         'email' => 'joe@email.com',
     ]);
+
+    $response->assertCreated();
 });
 
