@@ -2,6 +2,8 @@
 
 namespace App\Services\Suppliers;
 
+use App\DTO\Suppliers\CreateDTO;
+use App\Models\Supplier;
 use App\Repositories\Suppliers\SupplierRepositoryInterface;
 
 class SupplierService
@@ -12,5 +14,10 @@ class SupplierService
     public function all(): array
     {
         return $this->repository->all();
+    }
+
+    public function create(CreateDTO $dto): array
+    {
+        return $this->repository->create($dto);
     }
 }
