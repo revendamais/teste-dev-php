@@ -37,6 +37,14 @@ class SupplierEloquentORM implements SupplierRepositoryInterface
     {
         try {
             $supplier = $this->supplier->findOrFail($id);
+            if (!$supplier)
+            {
+                return [
+                    'data' => [],
+                    'status' => 404,
+                    'message' => 'Supplier not found'
+                ];
+            }
             return [
                 'data' => $supplier->toArray(),
                 'status' => 200
@@ -99,8 +107,31 @@ class SupplierEloquentORM implements SupplierRepositoryInterface
         }
     }
 
-    public function delete(int $id): array
+    public function destroy(int $id): array
     {
+        try {
+            $supplier = $this->supplier->findOrFail($id);
+            if (!$supplier) {
+                return [
+                    'data' => [],
+                    'message' => "Supplier not found",
+                    'status' => 404
+                ];
+            }
 
+            $supplier->delete();
+
+            return [
+                'message' => "Supplier successfully deleted",
+                'status' => 200
+            ];
+        } catch (Exception $e) {
+            Log::channel('dbException')->error('Error in delete supplier', ['error' => $e->getMessage()]);
+            return [
+                'data' => [],
+                'message' => "An error occurred while deleting supplier",
+                'status' => 500,
+            ];
+        }
     }
 }

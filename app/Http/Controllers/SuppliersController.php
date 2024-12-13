@@ -44,4 +44,10 @@ class SuppliersController extends Controller
         );
         return response()->json($supplier, $supplier['status']);
     }
+
+    public function destroy(int $id): JsonResponse
+    {
+        $supplier = $this->supplierService->destroy($id);
+        return response()->json($supplier, $supplier['status']);
+    }
 }

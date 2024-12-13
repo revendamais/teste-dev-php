@@ -31,4 +31,9 @@ class SupplierService
     {
         return $this->repository->update($dto, $id);
     }
+
+    public function destroy(int $id): array
+    {
+        return $this->repository->destroy($id);
+    }
 }

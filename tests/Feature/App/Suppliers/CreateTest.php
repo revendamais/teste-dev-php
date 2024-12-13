@@ -2,8 +2,6 @@
 
 namespace Tests\Feature\App\Suppliers;
 
-use App\Models\Supplier;
-
 /**
  * create a new supplier.
  */
