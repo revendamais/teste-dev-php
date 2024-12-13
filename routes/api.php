@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuppliersController;
+use Illuminate\Support\Facades\Redis;
 
 Route::prefix('v1')
     ->controller(SuppliersController::class)
