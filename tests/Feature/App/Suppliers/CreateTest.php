@@ -7,7 +7,7 @@ use App\Models\Supplier;
 /**
  * create a new supplier.
  */
-it('it should insert a new supplier', function () {
+it('should insert a new supplier', function () {
     $payload = [
         'nome' => 'Joe',
         'empresa' => 'Empresa 1',
@@ -21,7 +21,8 @@ it('it should insert a new supplier', function () {
 
     $response->assertStatus(201);
 
-    $response->assertJson([
+    // Verifica se os dados estão dentro do campo "data"
+    $response->assertJsonFragment([
         'nome' => 'Joe',
         'empresa' => 'Empresa 1',
         'cnpjcpf' => '12345678900000',
@@ -30,7 +31,9 @@ it('it should insert a new supplier', function () {
         'endereco' => 'Rua John Doe',
     ]);
 
+    // Verifica se os dados também estão no banco
     $this->assertDatabaseHas('suppliers', [
         'email' => 'joe@email.com',
     ]);
 });
+
