@@ -18,7 +18,7 @@ class SupplierEloquentORM implements SupplierRepositoryInterface
         try {
             $suppliers = Supplier::all();
             return [
-                'data' => $suppliers,
+                'data' => $suppliers->toArray(),
                 'status' => 200
             ];
         } catch (Exception $e) {

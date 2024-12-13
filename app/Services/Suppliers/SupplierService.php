@@ -6,7 +6,7 @@ use App\Repositories\Suppliers\SupplierRepositoryInterface;
 
 class SupplierService
 {
-    public function __construct(Protected SupplierRepositoryInterface $repository)
+    public function __construct(protected SupplierRepositoryInterface $repository)
     {}
 
     public function all(): array
