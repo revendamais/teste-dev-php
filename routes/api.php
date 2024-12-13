@@ -1,11 +1,10 @@
 <?php
 
-use App\Models\Supplier;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SuppliersController;
 
-Route::prefix('v1')->group(function () {
-    Route::get('/suppliers', function () {
-        $suppliers = Supplier::all();
-        return response()->json(['data' => $suppliers]);
-    })->name('suppliers.index');
+Route::prefix('v1')
+    ->controller(SuppliersController::class)
+    ->group(function () {
+    Route::get('/suppliers', 'index')->name('suppliers.index');
 });
