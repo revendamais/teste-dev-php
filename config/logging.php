@@ -127,6 +127,12 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'dbException' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/dbException.log'),
+            'level' => 'debug',
+        ],
+
     ],
 
 ];
