@@ -21,7 +21,7 @@ class SupplierEloquentORM implements SupplierRepositoryInterface
         try {
             $suppliers = $this->supplier->query()
                 ->orderByParam($request->query('orderByField') ?? 'id', $request->query('orderByDirection') ?? 'desc')
-                ->filterByEmpresa($request->query('empresa') ?? null)
+                ->filterByCompany($request->query('company') ?? null)
                 ->filterByCnpjCpf($request->query('cnpjcpf') ?? null)
                 ->filterByEmail($request->query('email') ?? null)
                 ->paginate(10);

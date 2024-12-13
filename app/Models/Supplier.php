@@ -12,11 +12,11 @@ class Supplier extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'empresa',
+        'company',
         'cnpjcpf',
-        'telefone',
+        'phone',
         'email',
-        'endereco',
+        'address',
     ];
 
     // ordination filter by "asc" and "desc" to fields
