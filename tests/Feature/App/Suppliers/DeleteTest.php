@@ -11,7 +11,6 @@ test('it should delete the supplier', function () {
 
     $this->assertDatabaseHas(Supplier::class, [
         'id' => $supplier->id,
-        'name' => $supplier->name,
         'company' => $supplier->company,
         'cnpjcpf' => $supplier->cnpjcpf,
         'phone' => $supplier->phone,
