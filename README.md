@@ -64,6 +64,12 @@ with a focus on showing knowledge of the required technologies.
 
 > **Obs:** To run the tests, comment out the **DB_DATABASE=api** variable in the .env and remove the **DB_DATABASE=testing** comment.
 
+- Run Migrations with Seeders in testing database:
+
+```bash
+    sail artisan migrate:fresh --seed
+```
+
 -   Run Pest tests
 
 ```bash
