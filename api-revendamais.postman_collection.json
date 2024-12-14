@@ -1,0 +1,250 @@
+{
+	"info": {
+		"_postman_id": "3b777367-2c63-483b-89bb-253ef89e296d",
+		"name": "api-revendamais",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15164640"
+	},
+	"item": [
+		{
+			"name": "index suppliers",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "public",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}v1/suppliers",
+					"host": [
+						"{{url}}v1"
+					],
+					"path": [
+						"suppliers"
+					],
+					"query": [
+						{
+							"key": "orderByDirection",
+							"value": "asc",
+							"disabled": true
+						},
+						{
+							"key": "orderByField",
+							"value": "id",
+							"disabled": true
+						},
+						{
+							"key": "company",
+							"value": "ernat",
+							"disabled": true
+						},
+						{
+							"key": "cnpjcpf",
+							"value": "66504533729189",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "zzzzz",
+							"disabled": true
+						},
+						{
+							"key": "paginate",
+							"value": "5",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "show supplier",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}v1/suppliers/2",
+					"host": [
+						"{{url}}v1"
+					],
+					"path": [
+						"suppliers",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BrasilAPI",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}brasilapi/19131243000197",
+					"host": [
+						"{{url}}brasilapi"
+					],
+					"path": [
+						"19131243000197"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create supplier",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"company\": \"emmesa 1\",\n    \"cnpjcpf\": \"12346678930000\",\n    \"phone\": \"11111311111\",\n    \"email\": \"test2@email.com\",\n    \"address\": \"rua endereco\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}v1/suppliers",
+					"host": [
+						"{{url}}v1"
+					],
+					"path": [
+						"suppliers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update supplier",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"teste nome\",\n    \"company\": \"emmpresa 1\",\n    \"cnpjcpf\": \"12345678930000\",\n    \"phone\": \"11111111111\",\n    \"email\": \"teste@email.com\",\n    \"address\": \"rua endereco\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}v1/suppliers/5",
+					"host": [
+						"{{url}}v1"
+					],
+					"path": [
+						"suppliers",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete supplier",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}v1/suppliers/2",
+					"host": [
+						"{{url}}v1"
+					],
+					"path": [
+						"suppliers",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost/api/",
+			"type": "string"
+		}
+	]
+}
