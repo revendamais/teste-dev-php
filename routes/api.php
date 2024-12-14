@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SuppliersController;
-use Illuminate\Support\Facades\Redis;
+use App\Http\Controllers\{BrasilAPIController, SuppliersController};
 
+Route::get('/brasilapi/{cnpj}', [BrasilAPIController::class, 'index']);
 Route::prefix('v1')
     ->controller(SuppliersController::class)
     ->group(function () {
