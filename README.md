@@ -30,6 +30,12 @@ with a focus on showing knowledge of the required technologies.
     cp .env.example .env && composer update
 ```
 
+- Define database password in .env:
+
+```
+    DB_PASSWORD=password
+```
+
 -   You can configure a shell alias
 
 ```bash
