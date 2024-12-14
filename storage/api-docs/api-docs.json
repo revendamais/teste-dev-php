@@ -12,6 +12,38 @@
         }
     ],
     "paths": {
+        "/api/brasilapi/{cnpj}": {
+            "get": {
+                "tags": [
+                    "BrasilAPI"
+                ],
+                "summary": "Get cnpj details",
+                "description": "Get all cnpj details",
+                "operationId": "460059982913740a6cf5ac90816e750c",
+                "parameters": [
+                    {
+                        "name": "cnpj",
+                        "in": "path",
+                        "description": "CNPJ without special characters.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "CNPJ details."
+                    },
+                    "404": {
+                        "description": "No CNPJ found."
+                    },
+                    "500": {
+                        "description": "An error occurred while retrieving the CNPJ details."
+                    }
+                }
+            }
+        },
         "/api/v1/suppliers": {
             "get": {
                 "tags": [
@@ -295,6 +327,10 @@
         }
     },
     "tags": [
+        {
+            "name": "BrasilAPI",
+            "description": "BrasilAPI"
+        },
         {
             "name": "Suppliers",
             "description": "Suppliers"
