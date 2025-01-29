@@ -1,54 +1,60 @@
 ## Teste para Desenvolvedor PHP/Laravel
 
-Bem-vindo ao teste de desenvolvimento para a posição de Desenvolvedor PHP/Laravel. 
+Este documento contém as informações necessárias para a execução do projeto.
 
-O objetivo deste teste é desenvolver uma API Rest para o cadastro de fornecedores, permitindo a busca por CNPJ ou CPF, utilizando Laravel no backend.
+### 1. Requisitos
 
-## Descrição do Projeto
+- PHP 8.3.7
+- Laravel Installer 5.11.0
+- Composer version 2.8.2
+- Nodejs v20.13.1
+- NPM 10.8.0
+- MySQL 8.0.24
 
-### Backend (API Laravel):
+### 2. Comandos
 
-#### CRUD de Fornecedores:
-- **Criar Fornecedor:**
-  - Permita o cadastro de fornecedores usando CNPJ ou CPF, incluindo informações como nome/nome da empresa, contato, endereço, etc.
-  - Valide a integridade e o formato dos dados, como o formato correto de CNPJ/CPF e a obrigatoriedade de campos.
+Para instalar as dependências do PHP e do Node.js:
 
-- **Editar Fornecedor:**
-  - Facilite a atualização das informações de fornecedores, mantendo a validação dos dados.
+- **Instalar dependências PHP**:
+  ```bash
+  composer install
 
-- **Excluir Fornecedor:**
-  - Possibilite a remoção segura de fornecedores.
+- **Instalar dependências do Node.js e rodar o build:**
+  ```bash
+  npm install && npm run build
 
-- **Listar Fornecedores:**
-  - Apresente uma lista paginada de fornecedores, com filtragem e ordenação.
+### 3. Gerando arquivo .env
+- **Copiar o arquivo .env.example para .env:**
+  ```bash
+  cp .env.example .env
 
-#### Migrations:
-- Utilize migrations do Laravel para definir a estrutura do banco de dados, garantindo uma boa organização e facilidade de manutenção.
+- **Gerar a chave da aplicação: Execute o seguinte comando para gerar a chave da aplicação Laravel:**
+  ```bash
+  php artisan key:generate
 
-## Requisitos
+### 4. Configurar conexão com o banco de dados MySQL
+- **Abra o arquivo .env e altere as seguintes linhas para configurar a conexão com o banco de dados:**
+  ```bash
+  DB_CONNECTION=mysql
+  DB_HOST=127.0.0.1
+  DB_PORT=3306
+  DB_DATABASE=nome_do_banco
+  DB_USERNAME=seu_usuario
+  DB_PASSWORD=sua_senha
 
-### Backend:
-- Implementar busca por CNPJ na [BrasilAPI](https://brasilapi.com.br/docs#tag/CNPJ/paths/~1cnpj~1v1~1{cnpj}/get) ou qualquer outro endpoint público.
+- **Executar as migrações: Após configurar o banco de dados, execute as migrações para criar as tabelas necessárias:**
+  ```bash
+  php artisan migrate
 
-## Tecnologias a serem utilizadas
-- Framework Laravel (PHP) 9.x ou superior
-- MySQL ou Postgres
+- **Executar os seeders: Para preencher as tabelas com dados fictícios ou de teste, execute:**
+  ```bash
+  php artisan db:seed
 
-## Critérios de Avaliação
-- Adesão aos requisitos funcionais e técnicos.
-- Qualidade do código, incluindo organização, padrões de desenvolvimento e segurança.
-- Documentação do projeto, incluindo um README detalhado com instruções de instalação e operação.
+- **Rodar o projeto: Para rodar o projeto no ambiente de desenvolvimento, execute:**
+  ```bash
+  composer run dev
 
-## Bônus
-- Implementação de Repository Pattern.
-- Implementação de testes automatizados.
-- Dockerização do ambiente de desenvolvimento.
-- Implementação de cache para otimizar o desempenho.
-
-## Entrega
-- Para iniciar o teste, faça um fork deste repositório; Se você apenas clonar o repositório não vai conseguir fazer push.
-- Crie uma branch com o nome que desejar;
-- Altere o arquivo README.md com as informações necessárias para executar o seu teste (comandos, migrations, seeds, etc);
-- Depois de finalizado, envie-nos o pull request;
-
-
+### 5. Rodar os testes
+- **Para rodar todos os testes da aplicação, use o comando:**
+  ```bash
+  php artisan test
