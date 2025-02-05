@@ -34,6 +34,7 @@ class FornecedorTest extends TestCase
     {
         $data = [
             "nome" => "John Doe",
+            "contato" => "Adm",
             "tipo" => "Física",
             "documento" => "222.222.222-22",
             "email" => "fornecedor@test.com.br",
@@ -57,6 +58,7 @@ class FornecedorTest extends TestCase
     {
         $fornecedor = Fornecedor::factory()->create([
             'nome' => 'Fornecedor Antigo',
+            "contato" => "Adm",
             'email' => 'antigo@email.com',
             "tipo" => "Física",
             "documento" => "222.222.222-22",
@@ -66,6 +68,7 @@ class FornecedorTest extends TestCase
 
         $dados = [
             'nome' => 'Fornecedor Atualizado',
+            "contato" => "Adm",
             'email' => 'atualizado@email.com',
             "tipo" => "Física",
             "documento" => "222.222.222-22",
@@ -80,6 +83,7 @@ class FornecedorTest extends TestCase
             ->assertJson([
                 'id' => $fornecedor->id,
                 'nome' => 'Fornecedor Atualizado',
+                "contato" => "Adm",
                 'email' => 'atualizado@email.com',
                 "tipo" => "Física",
                 "documento" => "222.222.222-22",
@@ -100,6 +104,7 @@ class FornecedorTest extends TestCase
         $response->assertStatus(Response::HTTP_OK)
             ->assertJson([
                 "nome" => $fornecedor->nome,
+                "contato" => $fornecedor->contato,
                 "email" => $fornecedor->email,
                 "tipo" => $fornecedor->tipo,
                 "documento" => $fornecedor->documento,

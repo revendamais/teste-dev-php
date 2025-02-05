@@ -19,6 +19,7 @@ class Fornecedor extends Model
      */
     protected $fillable = [
         'nome',
+        'contato',
         'tipo',
         'documento',
         'email',
