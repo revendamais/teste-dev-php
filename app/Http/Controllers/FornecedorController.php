@@ -20,7 +20,8 @@ class FornecedorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): JsonResponse {
+    public function index(Request $request): JsonResponse
+    {
 
         $query = Fornecedor::query();
 
@@ -55,7 +56,8 @@ class FornecedorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFornecedorRequest $request): JsonResponse {
+    public function store(StoreFornecedorRequest $request): JsonResponse
+    {
         // $fornecedor = Fornecedor::create($request->all());
         $fornecedor = $this->fornecedorRepository->create($request->all());
         return response()->json($fornecedor, 201);
@@ -64,7 +66,8 @@ class FornecedorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id): JsonResponse {
+    public function show($id): JsonResponse
+    {
         // return response()->json(Fornecedor::findOrFail($id));
         $fornecedor = $this->fornecedorRepository->find($id);
         return response()->json($fornecedor);
