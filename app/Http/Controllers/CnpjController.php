@@ -37,7 +37,6 @@ class CnpjController extends Controller
             }
 
             return response()->json($data);
-
         } catch (RequestException $e) {
             // Captura erros de requisição
             return response()->json([

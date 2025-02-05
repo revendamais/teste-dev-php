@@ -109,5 +109,8 @@ docker-compose down
 
 --------------------------------------------
 ###-- Executar testes unitários
-➜ php artisan test
+➜ php artisan test ou ./vendor/bin/phpunit
+
 --------------------------------------------
+###-- Executar Code Sniffer - PHPcs
+➜ ./vendor/bin/phpcs

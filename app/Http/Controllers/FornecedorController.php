@@ -39,7 +39,7 @@ class FornecedorController extends Controller
         $order = $request->get('order', 'asc'); // Valor padrão 'asc'
 
         $fornecedores = $query->orderBy($sortBy, $order)->paginate(10);
-        
+
         return response()->json($fornecedores);
         // return response()->json(Fornecedor::all());
     }
@@ -74,7 +74,8 @@ class FornecedorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateFornecedorRequest $request, $id): JsonResponse {
+    public function update(UpdateFornecedorRequest $request, $id): JsonResponse
+    {
         $fornecedor = Fornecedor::findOrFail($id);
         $fornecedor->update($request->all());
         return response()->json($fornecedor);
@@ -83,7 +84,8 @@ class FornecedorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id): JsonResponse {
+    public function destroy($id): JsonResponse
+    {
         $this->fornecedorRepository->delete($id);
         return response()->json(['message' => 'Fornecedor deletado com sucesso!'], 204);
     }

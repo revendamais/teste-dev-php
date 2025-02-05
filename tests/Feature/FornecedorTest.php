@@ -20,7 +20,7 @@ class FornecedorTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function testExample(): void
     {
         $response = $this->get('/');
 
@@ -30,7 +30,7 @@ class FornecedorTest extends TestCase
         /**
      * Test creating an fornecedor
      */
-    public function test_store_fornecedor()
+    public function testStoreFornecedor()
     {
         $data = [
             "nome" => "John Doe",
@@ -54,7 +54,7 @@ class FornecedorTest extends TestCase
     /**
      * Test updating an fornecedor
      */
-    public function test_update_fornecedor()
+    public function testUpdateFornecedor()
     {
         $fornecedor = Fornecedor::factory()->create([
             'nome' => 'Fornecedor Antigo',
@@ -92,7 +92,7 @@ class FornecedorTest extends TestCase
     /**
      * Test retrieving an fornecedor
      */
-    public function test_index_fornecedor()
+    public function testIndexFornecedor()
     {
         $fornecedor = Fornecedor::factory()->create();
 
@@ -113,7 +113,7 @@ class FornecedorTest extends TestCase
     /**
      * Test deleting an fornecedor
      */
-    public function test_destroy_fornecedor()
+    public function testDestroyFornecedor()
     {
         $fornecedor = Fornecedor::factory()->create();
 
@@ -126,7 +126,7 @@ class FornecedorTest extends TestCase
     /**
      * Test creating an fornecedor with validation failure
      */
-    public function test_store_fornecedor_validation()
+    public function testStoreFornecedorValidation()
     {
         $response = $this->postJson('/api/fornecedor', []);
 

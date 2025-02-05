@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Fornecedor extends Model
 {
-    use HasFactory, SoftDeletes;
-    
+    use HasFactory;
+    use SoftDeletes;
+
     protected $table = 'fornecedores';
 
     /**
@@ -26,5 +27,4 @@ class Fornecedor extends Model
         'telefone',
         'endereco'
     ];
-
 }

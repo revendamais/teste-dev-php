@@ -5,8 +5,10 @@ namespace App\Rules;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class DocumentoValido implements Rule {
-    public function passes($attribute, $value) {
+class DocumentoValido implements Rule
+{
+    public function passes($attribute, $value)
+    {
         $documento = preg_replace('/\D/', '', $value); // Remove caracteres não numéricos
 
         if (strlen($documento) === 11) {
@@ -18,12 +20,16 @@ class DocumentoValido implements Rule {
         return false;
     }
 
-    public function message() {
+    public function message()
+    {
         return 'O campo :attribute não é um CPF ou CNPJ válido.';
     }
 
-    private function validarCpf($cpf) {
-        if (preg_match('/(\d)\1{10}/', $cpf)) return false; // Impede sequências repetidas
+    private function validarCpf($cpf)
+    {
+        if (preg_match('/(\d)\1{10}/', $cpf)) {
+            return false; // Impede sequências repetidas
+        }
 
         $soma1 = 0;
         $soma2 = 0;
@@ -42,8 +48,11 @@ class DocumentoValido implements Rule {
         return $d1 == $cpf[9] && $d2 == $cpf[10];
     }
 
-    private function validarCnpj($cnpj) {
-        if (preg_match('/(\d)\1{13}/', $cnpj)) return false; // Impede sequências repetidas
+    private function validarCnpj($cnpj)
+    {
+        if (preg_match('/(\d)\1{13}/', $cnpj)) {
+            return false; // Impede sequências repetidas
+        }
 
         $pesos1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
         $pesos2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
