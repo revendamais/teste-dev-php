@@ -58,7 +58,6 @@ class FornecedorTest extends TestCase
     {
         $fornecedor = Fornecedor::factory()->create([
             'nome' => 'Fornecedor Antigo',
-            "contato" => "Adm",
             'email' => 'antigo@email.com',
             "tipo" => "Física",
             "documento" => "222.222.222-22",
@@ -68,7 +67,6 @@ class FornecedorTest extends TestCase
 
         $dados = [
             'nome' => 'Fornecedor Atualizado',
-            "contato" => "Adm",
             'email' => 'atualizado@email.com',
             "tipo" => "Física",
             "documento" => "222.222.222-22",
@@ -83,7 +81,6 @@ class FornecedorTest extends TestCase
             ->assertJson([
                 'id' => $fornecedor->id,
                 'nome' => 'Fornecedor Atualizado',
-                "contato" => "Adm",
                 'email' => 'atualizado@email.com',
                 "tipo" => "Física",
                 "documento" => "222.222.222-22",

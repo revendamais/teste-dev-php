@@ -3,12 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFornecedorRequest;
+use App\Http\Requests\UpdateFornecedorRequest;
 use App\Models\Fornecedor;
+use App\Repositories\FornecedorRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class FornecedorController extends Controller
 {
+    private $fornecedorRepository;
+
+    public function __construct(FornecedorRepositoryInterface $fornecedorRepository)
+    {
+        $this->fornecedorRepository = $fornecedorRepository;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -48,8 +56,8 @@ class FornecedorController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreFornecedorRequest $request): JsonResponse {
-        $fornecedor = Fornecedor::create($request->all());
-        
+        // $fornecedor = Fornecedor::create($request->all());
+        $fornecedor = $this->fornecedorRepository->create($request->all());
         return response()->json($fornecedor, 201);
     }
 
@@ -57,7 +65,9 @@ class FornecedorController extends Controller
      * Display the specified resource.
      */
     public function show($id): JsonResponse {
-        return response()->json(Fornecedor::findOrFail($id));
+        // return response()->json(Fornecedor::findOrFail($id));
+        $fornecedor = $this->fornecedorRepository->find($id);
+        return response()->json($fornecedor);
     }
 
     /**
@@ -71,7 +81,7 @@ class FornecedorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id): JsonResponse {
+    public function update(UpdateFornecedorRequest $request, $id): JsonResponse {
         $fornecedor = Fornecedor::findOrFail($id);
         $fornecedor->update($request->all());
         return response()->json($fornecedor);
@@ -81,8 +91,11 @@ class FornecedorController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id): JsonResponse {
-        Fornecedor::destroy($id);
-        return response()->json(['message' => 'Fornecedor deletado com sucesso!'], 204);
+        // Fornecedor::destroy($id);
+        // return response()->json(['message' => 'Fornecedor deletado com sucesso!'], 204);
         // return response()->noContent(); // Retorna 204 sem mensagem
+
+        $this->fornecedorRepository->delete($id);
+        return response()->json(['message' => 'Fornecedor deletado com sucesso!'], 204);
     }
 }
