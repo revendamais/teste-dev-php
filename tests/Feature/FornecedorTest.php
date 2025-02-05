@@ -35,8 +35,8 @@ class FornecedorTest extends TestCase
         $data = [
             "nome" => "John Doe",
             "contato" => "Adm",
-            "tipo" => "Física",
-            "documento" => "222.222.222-22",
+            "tipo" => "Jurídica",
+            "documento" => "12.345.678/0001-95",
             "email" => "fornecedor@test.com.br",
             "telefone" => "(19) 99222-3344",
             "endereco" => "Av Brasil, 2025 - Americana SP"
@@ -59,8 +59,8 @@ class FornecedorTest extends TestCase
         $fornecedor = Fornecedor::factory()->create([
             'nome' => 'Fornecedor Antigo',
             'email' => 'antigo@email.com',
-            "tipo" => "Física",
-            "documento" => "222.222.222-22",
+            "tipo" => "Jurídica",
+            "documento" => "12.345.678/0001-95",
             "telefone" => "(19) 99222-3344",
             "endereco" => "Av Brasil, 2025 - Americana SP"
         ]);
@@ -68,8 +68,8 @@ class FornecedorTest extends TestCase
         $dados = [
             'nome' => 'Fornecedor Atualizado',
             'email' => 'atualizado@email.com',
-            "tipo" => "Física",
-            "documento" => "222.222.222-22",
+            "tipo" => "Jurídica",
+            "documento" => "12.345.678/0001-95",
             "telefone" => "(19) 99222-3344",
             "endereco" => "Av Brasil, 2025 - Americana SP"
         ];
@@ -82,8 +82,8 @@ class FornecedorTest extends TestCase
                 'id' => $fornecedor->id,
                 'nome' => 'Fornecedor Atualizado',
                 'email' => 'atualizado@email.com',
-                "tipo" => "Física",
-                "documento" => "222.222.222-22",
+                "tipo" => "Jurídica",
+                "documento" => "12.345.678/0001-95",
                 "telefone" => "(19) 99222-3344",
                 "endereco" => "Av Brasil, 2025 - Americana SP"
             ]);

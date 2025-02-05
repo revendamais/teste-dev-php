@@ -52,3 +52,62 @@ O objetivo deste teste é desenvolver uma API Rest para o cadastro de fornecedor
 - Depois de finalizado, envie-nos o pull request;
 
 
+--------------------------------------------
+CONFIGURAÇÃO E INSTALAÇÃO DO PROJETO TESTE
+--------------------------------------------
+
+###-- INICIANDO COM DOCKER:
+
+# Suba os containers do projeto
+```sh
+docker-compose up -d
+```
+
+# Acessar o container
+```sh
+docker exec -it laravel_app bash
+```
+
+# Instalar as dependências do projeto
+```sh
+composer install
+```
+
+# Gerar a key do projeto Laravel
+```sh
+php artisan key:generate
+```
+
+# Roda as migrações seeders
+```sh
+php artisan migrate --seed
+```
+
+# Sair do container
+```sh
+exit
+```
+
+# Remover todos os containers
+```sh
+docker-compose down
+```
+
+--------------------------------------------
+###-- INICIANDO API PADRÃO:
+--------------------------------------------
+
+➜ CREATE SCHEMA `teste_dev_php`;
+
+➜ cd teste-dev-php
+➜ composer install
+➜ php artisan key:generate
+➜ php artisan migrate
+➜ php artisan db:seed
+➜ npm install && npm run build
+➜ composer run dev
+
+--------------------------------------------
+###-- Executar testes unitários
+➜ php artisan test
+--------------------------------------------
