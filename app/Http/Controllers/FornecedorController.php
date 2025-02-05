@@ -44,15 +44,6 @@ class FornecedorController extends Controller
         // return response()->json(Fornecedor::all());
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    // public function create()
-    // {
-    //     //
-    // }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -68,7 +59,6 @@ class FornecedorController extends Controller
      */
     public function show($id): JsonResponse
     {
-        // return response()->json(Fornecedor::findOrFail($id));
         $fornecedor = $this->fornecedorRepository->find($id);
         return response()->json($fornecedor);
     }
@@ -94,10 +84,6 @@ class FornecedorController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id): JsonResponse {
-        // Fornecedor::destroy($id);
-        // return response()->json(['message' => 'Fornecedor deletado com sucesso!'], 204);
-        // return response()->noContent(); // Retorna 204 sem mensagem
-
         $this->fornecedorRepository->delete($id);
         return response()->json(['message' => 'Fornecedor deletado com sucesso!'], 204);
     }

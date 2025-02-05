@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\DocumentoValido;
 
 class StoreFornecedorRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class StoreFornecedorRequest extends FormRequest
         return [
             'nome' => 'required|string',
             'tipo' => 'required|in:Física,Jurídica',
-            'documento' => 'required|unique:fornecedores',
+            'documento' => ['required', 'unique:fornecedores', new DocumentoValido()],
             'email' => 'required|email|unique:fornecedores',
             'telefone' => 'required',
             'endereco' => 'required',
