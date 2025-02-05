@@ -12,8 +12,27 @@ class FornecedorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse {
-        return response()->json(Fornecedor::all());
+    public function index(Request $request): JsonResponse {
+
+        $query = Fornecedor::query();
+
+        // Filtragem
+        if ($request->has('nome')) {
+            $query->where('nome', 'like', '%' . $request->input('nome') . '%');
+        }
+
+        if ($request->has('email')) {
+            $query->where('email', 'like', '%' . $request->input('email') . '%');
+        }
+
+        // Ordenação
+        $sortBy = $request->get('sort_by', 'nome'); // Valor padrão 'nome'
+        $order = $request->get('order', 'asc'); // Valor padrão 'asc'
+
+        $fornecedores = $query->orderBy($sortBy, $order)->paginate(10);
+        
+        return response()->json($fornecedores);
+        // return response()->json(Fornecedor::all());
     }
 
 
