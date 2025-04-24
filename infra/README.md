@@ -1,11 +1,11 @@
 # Laravel Docker Setup
 
-Serviços para desenvolvimento em Laravel:
+Serviços docker para desenvolvimento em Laravel:
 
-- **PHP-FPM (8.3)**
-- **Nginx (Alpine)**
-- **MySQL (8)**
-- **Docker Compose**
+-   **PHP-FPM (8.3)**
+-   **Nginx (Alpine)**
+-   **MySQL (8)**
+-   **Docker Compose**
 
 ---
 
