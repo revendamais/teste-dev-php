@@ -1,54 +1,37 @@
-## Teste para Desenvolvedor PHP/Laravel
+# Inicializando o projeto
 
-Bem-vindo ao teste de desenvolvimento para a posição de Desenvolvedor PHP/Laravel. 
+-   Faça o clone do repositório: `git clone`
+-   Após baixar o projeto siga para as instruções contida em [infra/README.md](infra/README.md)
 
-O objetivo deste teste é desenvolver uma API Rest para o cadastro de fornecedores, permitindo a busca por CNPJ ou CPF, utilizando Laravel no backend.
+## Utilizando a API
 
-## Descrição do Projeto
+-   Abra o postman ou outro software de sua preferencia para acessar a api.
 
-### Backend (API Laravel):
+-   Para ter acesso a api voce deve criar uma conta no endpoint POST http://127.0.0.1:8000/register
 
-#### CRUD de Fornecedores:
-- **Criar Fornecedor:**
-  - Permita o cadastro de fornecedores usando CNPJ ou CPF, incluindo informações como nome/nome da empresa, contato, endereço, etc.
-  - Valide a integridade e o formato dos dados, como o formato correto de CNPJ/CPF e a obrigatoriedade de campos.
+    > O body da request deve conter os campos name ,email e password
 
-- **Editar Fornecedor:**
-  - Facilite a atualização das informações de fornecedores, mantendo a validação dos dados.
+    > A request deve retornar 201.
 
-- **Excluir Fornecedor:**
-  - Possibilite a remoção segura de fornecedores.
+-   Para logar a requisição é no endpoit POST http://127.0.0.1:8000/api/login
 
-- **Listar Fornecedores:**
-  - Apresente uma lista paginada de fornecedores, com filtragem e ordenação.
+    > O body da request deve conter os campos email e password criado no passo anterior
 
-#### Migrations:
-- Utilize migrations do Laravel para definir a estrutura do banco de dados, garantindo uma boa organização e facilidade de manutenção.
+    > A request deve retornar 200 contendo o access_token que será utilizado para realizar as operações para o endpoint do fornecedor.
 
-## Requisitos
+-   O endpoint POST http://127.0.0.1:8000/logout de logout requer que access_token obtido no login seja passado como Bearer token na autenticação.
+    > A request deve retornar 200 com a mensagem de 'logged out'.
 
-### Backend:
-- Implementar busca por CNPJ na [BrasilAPI](https://brasilapi.com.br/docs#tag/CNPJ/paths/~1cnpj~1v1~1{cnpj}/get) ou qualquer outro endpoint público.
+### Api de fornecedor
 
-## Tecnologias a serem utilizadas
-- Framework Laravel (PHP) 9.x ou superior
-- MySQL ou Postgres
+-   O CRUD de fornecedor está disponivel no caminho http://127.0.0.1:8000/api/fornecedor para uso com o access_token obtido no login.
 
-## Critérios de Avaliação
-- Adesão aos requisitos funcionais e técnicos.
-- Qualidade do código, incluindo organização, padrões de desenvolvimento e segurança.
-- Documentação do projeto, incluindo um README detalhado com instruções de instalação e operação.
+    -   Criar Fornecedor: A criação de um fornecedor está disponivel no endpoint POST http://127.0.0.1:8000/api/fornecedor
 
-## Bônus
-- Implementação de Repository Pattern.
-- Implementação de testes automatizados.
-- Dockerização do ambiente de desenvolvimento.
-- Implementação de cache para otimizar o desempenho.
+        > O body da request aceita os campos nome, documento, email, telefone, endereco
 
-## Entrega
-- Para iniciar o teste, faça um fork deste repositório; Se você apenas clonar o repositório não vai conseguir fazer push.
-- Crie uma branch com o nome que desejar;
-- Altere o arquivo README.md com as informações necessárias para executar o seu teste (comandos, migrations, seeds, etc);
-- Depois de finalizado, envie-nos o pull request;
+        > O nome e documento são obrigatórios
 
-
+    -   Editar Fornecedor: A edição de um fornecedor está disponivel em PATCH http://127.0.0.1:8000/api/fornecedor/{id}
+    -   Excluir Fornecedor: A exclusão de um fornecedor está disponivel em DELETE http://127.0.0.1:8000/api/fornecedor/{id}
+    -   Listar Fornecedor: A lista de fornecedores está diponivel em GET http://127.0.0.1:8000/api/fornecedor
