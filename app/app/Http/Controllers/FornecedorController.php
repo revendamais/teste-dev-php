@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\ApiResponseClass;
 use App\Models\Fornecedor;
 use Illuminate\Http\Request;
 
 use App\Repositories\Interfaces\FornecedorRepositoryInterface;
-
 use RafaelLaurindo\BrasilApi\BrasilApiFacade;
 use LaravelLegends\PtBrValidator\Rules\Cnpj;
+use App\Classes\ResponseClass;
+use App\Http\Requests\FornecedorCreateRequest;
+use App\Http\Requests\FornecedorUpdateRequest;
+use App\Http\Resources\FornecedorRecurso;
+use Illuminate\Support\Facades\DB;
 
 class FornecedorController extends Controller
 {
@@ -24,7 +29,8 @@ class FornecedorController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json($this->fornecedorRepository->all($request));
+        $data = $this->fornecedorRepository->all($request);
+        return ApiResponseClass::sendResponse(FornecedorRecurso::collection($data),200);
     }
 
     /**
@@ -38,20 +44,33 @@ class FornecedorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(FornecedorCreateRequest $request)
     {
-        if($this->buscarPorCnpj($request->documento)){
-            $fornecedor = $this->fornecedorRepository->create($request->all());
-            return response()->json($fornecedor, 201);
+        $data = [
+            "nome" => $request->nome,
+            "documento" => $request->documento,
+            "email" => $request->email,
+            "telefone" => $request->telefone,
+            "endereco"=> $request->endereco
+        ];
+        DB::beginTransaction();
+        try{
+            $fornecedor = $this->fornecedorRepository->create($data);
+            DB::commit();
+            return ApiResponseClass::sendResponse(new FornecedorRecurso($fornecedor),'Fornecedor criado com sucesso', 201);
+        }catch(\Exception $ex){
+            return ApiResponseClass::rollback($ex);
         }
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Fornecedor $fornecedor)
+    public function show($id)
     {
-        return response()->json($this->fornecedorRepository->find($fornecedor->id));
+        $fornecedor = $this->fornecedorRepository->find($id);
+        return ApiResponseClass::sendResponse(new FornecedorRecurso($fornecedor),'',200);
     }
 
     /**
@@ -65,19 +84,31 @@ class FornecedorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Fornecedor $fornecedor)
+    public function update(FornecedorUpdateRequest $request, $id)
     {
-        $fornecedor = $this->fornecedorRepository->update($fornecedor->id, $request->all());
-        return response()->json($fornecedor);
+        $data = [
+            "nome" => $request->nome,
+            "documento" => $request->documento,
+            "email" => $request->email,
+            "telefone" => $request->telefone,
+            "endereco"=> $request->endereco
+        ];
+        DB::beginTransaction();
+        try{
+            $fornecedor = $this->fornecedorRepository->update($id, $data);
+            return ApiResponseClass::sendResponse(new FornecedorRecurso($fornecedor),'Fornecedor atualizado com sucesso', 200);
+        }catch(\Exception $ex){
+            return ApiResponseClass::rollback($ex);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Fornecedor $fornecedor)
+    public function destroy($id)
     {
-        $this->fornecedorRepository->delete($fornecedor->id);
-        return response()->json(['mensagem' => 'Fornecedor removido com sucesso.'], 204);
+        $this->fornecedorRepository->delete($id);
+        return ApiResponseClass::sendResponse(null,"Fornecedor removido com sucesso", 204);
     }
 
     public function buscarPorCnpj($cnpj)

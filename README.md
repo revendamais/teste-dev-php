@@ -7,7 +7,7 @@
 
 -   Abra o postman ou outro software de sua preferencia para acessar a api.
 
--   Para ter acesso a api voce deve criar uma conta no endpoint POST http://127.0.0.1:8000/register
+-   Para ter acesso a api voce deve criar uma conta no endpoint POST http://127.0.0.1:8000/api/register
 
     > O body da request deve conter os campos name ,email e password
 
@@ -35,3 +35,4 @@
     -   Editar Fornecedor: A edição de um fornecedor está disponivel em PATCH http://127.0.0.1:8000/api/fornecedor/{id}
     -   Excluir Fornecedor: A exclusão de um fornecedor está disponivel em DELETE http://127.0.0.1:8000/api/fornecedor/{id}
     -   Listar Fornecedor: A lista de fornecedores está diponivel em GET http://127.0.0.1:8000/api/fornecedor
+    -   Buscar por dados de um cnpj: É possivel fazer uma busca por dados de um cnpj no endpoint GET http://127.0.0.1:8000/api/fornecedores/cnpj/{cnpj}

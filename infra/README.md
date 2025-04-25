@@ -20,7 +20,7 @@ Serviços docker para desenvolvimento em Laravel:
 cd infra
 sudo docker-compose up -d --build
 sudo docker-compose exec app composer install
-cp app/.env.example app/.env
+cp ../app/.env.example ../app/.env
 sudo docker-compose exec app php artisan key:generate
 sudo docker-compose exec app php artisan migrate
 ```
@@ -32,10 +32,12 @@ sudo docker-compose exec app php artisan migrate
 > Caso apareça algum problema de permissão ao acessar o sistema rode os comandos:
 
 ```bash
-sudo docker compose exec -it app sh
+sudo docker-compose exec -it app sh
 chmod 755 -R *
 exit
 ```
+
+> Foram encontrados erros de permissão usando o WSL tanto nos arquivos como na parte de network. É recomendado rodar em uma maquina linux.
 
 ---
 
