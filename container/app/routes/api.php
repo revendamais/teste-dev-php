@@ -10,4 +10,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::apiResource('suppliers', SupplierController::class);
-Route::get('/search/{cnpj}', [ExternalSearchController::class,'search']);
+Route::get('/externalsearch/{cnpj}', [ExternalSearchController::class,'search']);

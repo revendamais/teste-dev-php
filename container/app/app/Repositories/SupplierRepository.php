@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Helpers\Cacher;
+use App\Http\Resources\SupplierResource;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use App\Repositories\Interfaces\SupplierRepositoryInterface;
@@ -31,12 +32,11 @@ class SupplierRepository implements SupplierRepositoryInterface
         $supplier = Supplier::findOrFail($id);
         $cachedData = $this->cacher->getCached('supplier_'.$supplier->id);
         if ($cachedData) {
-            $data = $cachedData;
+            $data = new SupplierResource($cachedData);
         } else {
             $this->cacher->setCached('supplier_'.$supplier->id, $supplier->toJson());
             $data = $supplier;
         }
-
         return $data;
     }
 
@@ -62,5 +62,4 @@ class SupplierRepository implements SupplierRepositoryInterface
         $this->cacher->removeCached('supplier_'.$id);
         return $supplier->forceDelete();
     }
-
 }

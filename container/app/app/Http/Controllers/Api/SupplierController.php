@@ -6,6 +6,7 @@ use App\Models\Supplier;
 use App\Http\Requests\SupplierCreateRequest;
 use App\Http\Requests\SupplierUpdateRequest;
 use App\Http\Resources\SupplierResource;
+use App\Http\Resources\SupplierCollection;
 use App\Repositories\Interfaces\SupplierRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -26,7 +27,7 @@ class SupplierController extends Controller
     public function index(Request $request)
     {
         $suppliers = $this->supplierRepository->all($request);
-        return SupplierResource::collection($suppliers);
+        return new SupplierCollection($suppliers);
     }
 
     /**
@@ -44,8 +45,8 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier): JsonResponse
     {
-        $data = $this->supplierRepository->find($supplier->id);
-        return response()->json($data);
+        $data =  $this->supplierRepository->find($supplier->id);
+        return response()->json(new SupplierResource($data));
     }
 
     /**

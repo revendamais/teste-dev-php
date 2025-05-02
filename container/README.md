@@ -21,20 +21,16 @@ Voçê pode escolher entre 2 tipos de servidor web
 
 ## 📦 Comandos a serem executados
 
-Escolha entre o nginx ou caddy para a criação do serviço
+Escolha entre o nginx ou caddy para a criação dos serviços:
 
 ```bash
 cd container
-sudo PWD=${PWD} HTTP_PORT=8000 docker-compose -f docker-compose.<caddy|nginx>.yml up -d --build
-sudo docker exec laravel_php composer install --no-dev --optimize-autoloader
-cp ./app/.env.example ./app/.env
-sudo docker exec laravel_php php artisan key:generate
-sudo docker exec laravel_php php artisan migrate
+sudo PWD=${PWD} HTTP_PORT=8000 docker compose -f docker-compose.caddy.yml up -d --build
+ou
+sudo PWD=${PWD} HTTP_PORT=8000 docker compose -f docker-compose.nginx.yml up -d --build
 ```
 
----
-
-> Dependendo de como o docker foi instalado o comando **docker-compose** pode ser subtituido por **docker compose**
+> Dependendo de como o docker foi instalado o comando **docker compose** pode ser subtituido por **docker-compose**
 
 > Caso apareça algum problema de permissão ao acessar o sistema rode os comandos:
 
@@ -48,9 +44,32 @@ exit
 
 ---
 
+Instalando as dependências do projeto:
+
+```bash
+sudo docker exec laravel_php composer install --no-dev --optimize-autoloader
+cp ./app/.env.example ./app/.env
+sudo docker exec laravel_php php artisan key:generate
+sudo docker exec laravel_php php artisan migrate
+```
+
 Assim que finalizado o migrate o sistema estará disponivel em [http://app.localhost:8000](http://app.localhost:8000).
 
-Outros endereços que podem ser utilizados.
+---
+
+Para rodar os testes seguem os comandos
+
+```bash
+sudo docker exec laravel_php composer install
+cp ./app/.env.example ./app/.env
+sudo docker exec laravel_php php artisan key:generate
+sudo docker exec laravel_php php artisan migrate
+sudo docker exec laravel_php php artisan test
+```
+
+---
+
+Outros endereços que podem ser utilizados para auxiliar no desenvolvimento com o laravel.
 
 -   [PHPMyAdmin](http://phpmyadmin.localhost:8000)
 -   [MailHog](http://mailhog.localhost:8000)

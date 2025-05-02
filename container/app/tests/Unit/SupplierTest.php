@@ -104,9 +104,9 @@ class SupplierTest extends TestCase
     public function test_destroy_supplier()
     {
         $supplier = Supplier::factory()->create();
-        $response = $this->deleteJson("/api/suppliers/{$supplier->id}");
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
         $this->assertDatabaseHas('suppliers', ['id' => $supplier->id]);
+        $response = $this->delete("/api/suppliers/{$supplier->id}");
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
     /**
