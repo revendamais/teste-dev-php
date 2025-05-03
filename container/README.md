@@ -55,6 +55,8 @@ sudo docker exec laravel_php php artisan migrate
 
 Assim que finalizado o migrate o sistema estará disponivel em [http://app.localhost:8000](http://app.localhost:8000).
 
+> Para o servidor web caddy a url será reescrita para [https://app.localhost](https://app.localhost) e irá emitir que a conexão não é segura e basta ignorar pois é comum para certificados self-signed.
+
 ---
 
 Para rodar os testes seguem os comandos
