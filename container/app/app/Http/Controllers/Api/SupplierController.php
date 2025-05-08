@@ -3,41 +3,33 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Supplier;
-use App\Http\Requests\SupplierCreateRequest;
-use App\Http\Requests\SupplierUpdateRequest;
-use App\Http\Resources\SupplierResource;
-use App\Http\Resources\SupplierCollection;
-use App\Repositories\Interfaces\SupplierRepositoryInterface;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\SupplierService;
 
 class SupplierController extends Controller
 {
-    protected $supplierRepository;
+    protected $supplierService;
 
-    public function __construct(SupplierRepositoryInterface $supplierRepository)
+    public function __construct(SupplierService $supplierService)
     {
-        $this->supplierRepository = $supplierRepository;
+        $this->supplierService = $supplierService;
     }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $suppliers = $this->supplierRepository->all($request);
-        return new SupplierCollection($suppliers);
+        return $this->supplierService->index($request);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SupplierCreateRequest $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
-        $data = $request->validated();
-        $supplier = $this->supplierRepository->create($data);
-        return response()->json(new SupplierResource($supplier), 201);
+        return $this->supplierService->store($request);
     }
 
     /**
@@ -45,26 +37,23 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier): JsonResponse
     {
-        $data =  $this->supplierRepository->find($supplier->id);
-        return response()->json(new SupplierResource($data));
+        return $this->supplierService->show($supplier);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(SupplierUpdateRequest $request, Supplier $supplier): JsonResponse
+    public function update(Request $request, Supplier $supplier): JsonResponse
     {
-        $data = $request->validated();
-        $updatedData = new SupplierResource($this->supplierRepository->update($supplier->id, $data));
-        return response()->json($updatedData);
+        return $this->supplierService->update($request, $supplier);
     }
 
     /**
      * Delete the specified resource.
      */
-    public function destroy(Supplier $supplier): Response
+    public function destroy(Supplier $supplier): JsonResponse
     {
-        $this->supplierRepository->delete($supplier->id);
-        return response()->noContent();
+        return $this->supplierService->destroy($supplier);
+
     }
 }

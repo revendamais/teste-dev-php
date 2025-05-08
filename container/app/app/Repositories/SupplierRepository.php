@@ -3,9 +3,9 @@
 namespace App\Repositories;
 
 use App\Helpers\Cacher;
-use App\Http\Resources\SupplierResource;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use App\Http\Resources\SupplierResource;
 use App\Repositories\Interfaces\SupplierRepositoryInterface;
 
 class SupplierRepository implements SupplierRepositoryInterface
@@ -27,7 +27,7 @@ class SupplierRepository implements SupplierRepositoryInterface
         return Supplier::paginate(page: $request->page ?? 1, perPage: $request->per_page ?? 20);
     }
 
-    public function find($id)
+    public function find($id) : SupplierResource
     {
         $supplier = Supplier::findOrFail($id);
         $cachedData = $this->cacher->getCached('supplier_'.$supplier->id);
@@ -35,19 +35,19 @@ class SupplierRepository implements SupplierRepositoryInterface
             $data = new SupplierResource($cachedData);
         } else {
             $this->cacher->setCached('supplier_'.$supplier->id, $supplier->toJson());
-            $data = $supplier;
+            $data = new SupplierResource($supplier);
         }
         return $data;
     }
 
-    public function create(array $data)
+    public function create(array $data) : Supplier
     {
         $supplier = Supplier::create($data);
         $this->cacher->setCached('supplier_'.$supplier->id, $supplier->toJson());
         return $supplier;
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data) : Supplier
     {
         $supplier = Supplier::findOrFail($id);
         $supplier->update($data);
