@@ -1,54 +1,35 @@
-## Teste para Desenvolvedor PHP/Laravel
+# Inicializando o projeto
 
-Bem-vindo ao teste de desenvolvimento para a posição de Desenvolvedor PHP/Laravel. 
+-   Faça o clone do repositório: `git clone https://github.com/edblighter/teste-dev-php`
+-   A seguir rode os comandos
 
-O objetivo deste teste é desenvolver uma API Rest para o cadastro de fornecedores, permitindo a busca por CNPJ ou CPF, utilizando Laravel no backend.
+    ```bash
+    cd teste-dev-php
+    git checkout teste
+    ```
 
-## Descrição do Projeto
+-   Após baixar o projeto siga para as instruções contida em [infra/README.md](infra/README.md)
 
-### Backend (API Laravel):
+### Api de fornecedor
 
-#### CRUD de Fornecedores:
-- **Criar Fornecedor:**
-  - Permita o cadastro de fornecedores usando CNPJ ou CPF, incluindo informações como nome/nome da empresa, contato, endereço, etc.
-  - Valide a integridade e o formato dos dados, como o formato correto de CNPJ/CPF e a obrigatoriedade de campos.
+-   O CRUD de fornecedor está disponivel no endpoint http://app.localhost:8000/api/suppliers .
 
-- **Editar Fornecedor:**
-  - Facilite a atualização das informações de fornecedores, mantendo a validação dos dados.
+    -   Listar Fornecedores: A listagem paginada de fornecedores está disponivel no endpoint GET http://app.localhost:8000/api/suppliers
 
-- **Excluir Fornecedor:**
-  - Possibilite a remoção segura de fornecedores.
+        > os argumentos do paginador sao ?page={}&per_page={}&order={}
 
-- **Listar Fornecedores:**
-  - Apresente uma lista paginada de fornecedores, com filtragem e ordenação.
+    -   Criar Fornecedor: A criação de um fornecedor está disponivel no endpoint POST http://app.localhost:8000/api/suppliers
 
-#### Migrations:
-- Utilize migrations do Laravel para definir a estrutura do banco de dados, garantindo uma boa organização e facilidade de manutenção.
+        > O body da request aceita os campos name, type[CPF,CNPJ], document, email, phone, address
 
-## Requisitos
+        > Todos os campos são obrigatórios no cadastro.
 
-### Backend:
-- Implementar busca por CNPJ na [BrasilAPI](https://brasilapi.com.br/docs#tag/CNPJ/paths/~1cnpj~1v1~1{cnpj}/get) ou qualquer outro endpoint público.
+    -   Editar Fornecedor: A edição de um fornecedor está disponivel em PATCH http://app.localhost:8000/api/suppliers/{id}
 
-## Tecnologias a serem utilizadas
-- Framework Laravel (PHP) 9.x ou superior
-- MySQL ou Postgres
+        > O body da requisição aceita todos os parametros do create.
 
-## Critérios de Avaliação
-- Adesão aos requisitos funcionais e técnicos.
-- Qualidade do código, incluindo organização, padrões de desenvolvimento e segurança.
-- Documentação do projeto, incluindo um README detalhado com instruções de instalação e operação.
+        > Nenhum campo é obrigatorio mas document e email serão validados caso enviados.
 
-## Bônus
-- Implementação de Repository Pattern.
-- Implementação de testes automatizados.
-- Dockerização do ambiente de desenvolvimento.
-- Implementação de cache para otimizar o desempenho.
+    -   Excluir Fornecedor: A exclusão de um fornecedor está disponivel em DELETE http://app.localhost:8000/api/suppliers/{id}
 
-## Entrega
-- Para iniciar o teste, faça um fork deste repositório; Se você apenas clonar o repositório não vai conseguir fazer push.
-- Crie uma branch com o nome que desejar;
-- Altere o arquivo README.md com as informações necessárias para executar o seu teste (comandos, migrations, seeds, etc);
-- Depois de finalizado, envie-nos o pull request;
-
-
+    -   Buscar por dados de um cnpj em API externa: É possivel fazer uma busca por dados de um cnpj no endpoint GET http://app.localhost:8000/api/externalsearch/{cnpj}
