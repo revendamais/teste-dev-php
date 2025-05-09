@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Supplier;
+use App\Classes\ApiResponseClass;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SupplierCreateRequest;
+use App\Http\Requests\SupplierIndexRequest;
+use App\Http\Requests\SupplierUpdateRequest;
 use App\Services\SupplierService;
+use Illuminate\Database\RecordNotFoundException;
 
 class SupplierController extends Controller
 {
@@ -19,41 +22,60 @@ class SupplierController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(SupplierIndexRequest $request)
     {
-        return $this->supplierService->index($request);
+        return ApiResponseClass::sendResponse($this->supplierService->getAllSuppliers($request), '',200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResponse
+    public function store(SupplierCreateRequest $request): JsonResponse
     {
-        return $this->supplierService->store($request);
+        $create = $this->supplierService->createSupplier($request);
+        return ApiResponseClass::sendResponse($create, '',201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Supplier $supplier): JsonResponse
+    public function show($id): JsonResponse
     {
-        return $this->supplierService->show($supplier);
+        try{
+            $data = $this->supplierService->getSupplierById($id);
+        }catch(RecordNotFoundException $e){
+            return ApiResponseClass::sendResponse('','Supplier Not found',404);
+        }
+        return ApiResponseClass::sendResponse($data, '',200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Supplier $supplier): JsonResponse
+    public function update(SupplierUpdateRequest $request, $id): JsonResponse
     {
-        return $this->supplierService->update($request, $supplier);
+        try{
+            $action = $this->supplierService->updateSupplier($request, $id);
+        }catch(RecordNotFoundException $e){
+            return ApiResponseClass::sendResponse('','Supplier Not found',404);
+        }
+        return ApiResponseClass::sendResponse($action, '',200);
     }
 
     /**
      * Delete the specified resource.
      */
-    public function destroy(Supplier $supplier): JsonResponse
+    public function destroy($id): JsonResponse
     {
-        return $this->supplierService->destroy($supplier);
-
+        try{
+            $delete = $this->supplierService->deleteSupplier($id);
+            if($delete){
+                return ApiResponseClass::sendResponse('','',204);
+            }else{
+                return ApiResponseClass::sendResponse('','The DELETE operation was not successful',400);
+            }
+        }catch(RecordNotFoundException $e){
+            return ApiResponseClass::sendResponse('','Supplier Not found',404);
+        }
     }
 }

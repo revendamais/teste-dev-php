@@ -7,13 +7,11 @@ use App\Classes\ApiResponseClass;
 use App\Http\Resources\SupplierResource;
 use App\Http\Resources\SupplierCollection;
 use App\Http\Requests\SupplierCreateRequest;
+use App\Http\Requests\SupplierIndexRequest;
 use App\Http\Requests\SupplierUpdateRequest;
 use App\Repositories\Interfaces\SupplierRepositoryInterface;
-
+use Illuminate\Database\RecordNotFoundException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-
 
 class SupplierService
 {
@@ -24,35 +22,47 @@ class SupplierService
         $this->supplierRepository = $supplierRepository;
     }
 
-    public function index(Request $request)
+    public function getAllSuppliers(SupplierIndexRequest $request): SupplierCollection
     {
-        $suppliers = $this->supplierRepository->all($request);
-        return ApiResponseClass::sendResponse(new SupplierCollection($suppliers), '',200);
+        $data = $request->validated();
+        $suppliers = $this->supplierRepository->all($data);
+        return new SupplierCollection($suppliers);
     }
 
-    public function store(SupplierCreateRequest $request): JsonResponse
+    public function createSupplier(SupplierCreateRequest $request): SupplierResource
     {
         $data = $request->validated();
         $supplier = $this->supplierRepository->create($data);
-        return ApiResponseClass::sendResponse(new SupplierResource($supplier), '',201);
+        return new SupplierResource($supplier);
     }
 
-    public function show(Supplier $supplier): JsonResponse
+    public function getSupplierById($id): SupplierResource
     {
-        $supplier =  $this->supplierRepository->find($supplier->id);
-        return ApiResponseClass::sendResponse(new SupplierResource($supplier), '',200);
+        try{
+            $supplier =  $this->supplierRepository->find($id);
+        }catch(RecordNotFoundException $e){
+            throw new RecordNotFoundException($e->getMessage());
+        }
+        return new SupplierResource($supplier);
     }
 
-    public function update(SupplierUpdateRequest $request, Supplier $supplier): JsonResponse
+    public function updateSupplier(SupplierUpdateRequest $request, $id): SupplierResource
     {
         $data = $request->validated();
-        $updatedData = new SupplierResource($this->supplierRepository->update($supplier->id, $data));
-        return ApiResponseClass::sendResponse(new SupplierResource($updatedData), '',200);
+        try{
+            $updatedData = new SupplierResource($this->supplierRepository->update($id, $data));
+        }catch(RecordNotFoundException $e){
+            throw new RecordNotFoundException($e->getMessage());
+        }
+        return new SupplierResource($updatedData);
     }
 
-    public function destroy(Supplier $supplier): JsonResponse
+    public function deleteSupplier($id)
     {
-        $this->supplierRepository->delete($supplier->id);
-        return ApiResponseClass::sendResponse('','',204);
+        try{
+            return $this->supplierRepository->delete($id);
+        }catch(RecordNotFoundException $e){
+            throw new RecordNotFoundException($e->getMessage());
+        }
     }
 }

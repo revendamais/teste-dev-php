@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class SupplierUpdateRequest extends FormRequest
 {
@@ -29,5 +31,14 @@ class SupplierUpdateRequest extends FormRequest
             'phone' => 'sometimes|string',
             'address' => 'sometimes|string',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+          'success'   => false,
+          'message'   => 'Validation errors',
+          'data'      => $validator->errors()
+        ],400));
     }
 }

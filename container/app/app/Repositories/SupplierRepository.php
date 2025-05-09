@@ -4,9 +4,9 @@ namespace App\Repositories;
 
 use App\Helpers\Cacher;
 use App\Models\Supplier;
-use Illuminate\Http\Request;
 use App\Http\Resources\SupplierResource;
 use App\Repositories\Interfaces\SupplierRepositoryInterface;
+use Illuminate\Database\RecordNotFoundException;
 
 class SupplierRepository implements SupplierRepositoryInterface
 {
@@ -17,23 +17,23 @@ class SupplierRepository implements SupplierRepositoryInterface
         $this->cacher = new Cacher('redis');
     }
 
-    public function all(Request $request)
+    public function all(array $data)
     {
-        $request->validate([
-            'order' => 'in:asc,desc',
-            'per_page' => 'integer|min:1',
-            'page' => 'integer|min:1',
-        ]);
-        return Supplier::paginate(page: $request->page ?? 1, perPage: $request->per_page ?? 20);
+        return Supplier::orderBy($data["order_by"] ?? 'name',$data["order"] ?? 'asc')
+        ->paginate(page: $data["page"] ?? 1, perPage: $data["per_page"] ?? 20);
     }
 
     public function find($id) : SupplierResource
     {
-        $supplier = Supplier::findOrFail($id);
-        $cachedData = $this->cacher->getCached('supplier_'.$supplier->id);
+        $cachedData = $this->cacher->getCached('supplier_'.$id);
         if ($cachedData) {
             $data = new SupplierResource($cachedData);
         } else {
+            try{
+                $supplier = Supplier::findOrFail($id);
+            }catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e){
+                throw new RecordNotFoundException("Id:`$id` not found");
+            }
             $this->cacher->setCached('supplier_'.$supplier->id, $supplier->toJson());
             $data = new SupplierResource($supplier);
         }
@@ -49,7 +49,11 @@ class SupplierRepository implements SupplierRepositoryInterface
 
     public function update($id, array $data) : Supplier
     {
-        $supplier = Supplier::findOrFail($id);
+        try{
+            $supplier = Supplier::findOrFail($id);
+        }catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e){
+            throw new RecordNotFoundException("Id:`$id` not found");
+        }
         $supplier->update($data);
         $supplier->refresh();
         $this->cacher->setCached('supplier_'.$supplier->id, $supplier->toJson());
@@ -58,7 +62,11 @@ class SupplierRepository implements SupplierRepositoryInterface
 
     public function delete($id)
     {
-        $supplier = Supplier::findOrFail($id);
+        try{
+            $supplier = Supplier::findOrFail($id);
+        }catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e){
+            throw new RecordNotFoundException("Id:`$id` not found");
+        }
         $this->cacher->removeCached('supplier_'.$id);
         return $supplier->forceDelete();
     }
