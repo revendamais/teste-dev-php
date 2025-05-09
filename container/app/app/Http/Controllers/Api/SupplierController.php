@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Classes\ApiResponseClass;
 use Illuminate\Http\JsonResponse;
+use App\Services\DTO\SupplierDTO;
+use App\Services\SupplierService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SupplierCreateRequest;
 use App\Http\Requests\SupplierIndexRequest;
 use App\Http\Requests\SupplierUpdateRequest;
-use App\Services\SupplierService;
+use App\Http\Resources\SupplierCollection;
+use App\Http\Resources\SupplierResource;
 use Illuminate\Database\RecordNotFoundException;
 
 class SupplierController extends Controller
@@ -24,7 +27,9 @@ class SupplierController extends Controller
      */
     public function index(SupplierIndexRequest $request)
     {
-        return ApiResponseClass::sendResponse($this->supplierService->getAllSuppliers($request), '',200);
+        $data = $request->validated();
+        $data = $this->supplierService->getAllSuppliers($data);
+        return ApiResponseClass::sendResponse(new SupplierCollection($data), '', 200);
     }
 
     /**
@@ -32,8 +37,9 @@ class SupplierController extends Controller
      */
     public function store(SupplierCreateRequest $request): JsonResponse
     {
-        $create = $this->supplierService->createSupplier($request);
-        return ApiResponseClass::sendResponse($create, '',201);
+        $data = $request->validated();
+        $create = $this->supplierService->createSupplier(SupplierDTO::fromArray($data));
+        return ApiResponseClass::sendResponse(new SupplierResource($create), '',201);
     }
 
     /**
@@ -46,7 +52,7 @@ class SupplierController extends Controller
         }catch(RecordNotFoundException $e){
             return ApiResponseClass::sendResponse('','Supplier Not found',404);
         }
-        return ApiResponseClass::sendResponse($data, '',200);
+        return ApiResponseClass::sendResponse(new SupplierResource($data), '',200);
     }
 
     /**
@@ -55,11 +61,13 @@ class SupplierController extends Controller
     public function update(SupplierUpdateRequest $request, $id): JsonResponse
     {
         try{
-            $action = $this->supplierService->updateSupplier($request, $id);
+            $data = $request->validated();
+            $action = $this->supplierService->updateSupplier(SupplierDTO::fromArray($data));
+
         }catch(RecordNotFoundException $e){
             return ApiResponseClass::sendResponse('','Supplier Not found',404);
         }
-        return ApiResponseClass::sendResponse($action, '',200);
+        return ApiResponseClass::sendResponse(new SupplierResource($action), '',200);
     }
 
     /**

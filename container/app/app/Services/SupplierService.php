@@ -2,16 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\Supplier;
-use App\Classes\ApiResponseClass;
-use App\Http\Resources\SupplierResource;
-use App\Http\Resources\SupplierCollection;
-use App\Http\Requests\SupplierCreateRequest;
-use App\Http\Requests\SupplierIndexRequest;
-use App\Http\Requests\SupplierUpdateRequest;
 use App\Repositories\Interfaces\SupplierRepositoryInterface;
+use App\Services\DTO\SupplierDTO;
 use Illuminate\Database\RecordNotFoundException;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SupplierService
 {
@@ -22,39 +16,36 @@ class SupplierService
         $this->supplierRepository = $supplierRepository;
     }
 
-    public function getAllSuppliers(SupplierIndexRequest $request): SupplierCollection
+    public function getAllSuppliers(array $requestFields): LengthAwarePaginator
     {
-        $data = $request->validated();
-        $suppliers = $this->supplierRepository->all($data);
-        return new SupplierCollection($suppliers);
+        $suppliers = $this->supplierRepository->all($requestFields);
+        return $suppliers;
     }
 
-    public function createSupplier(SupplierCreateRequest $request): SupplierResource
+    public function createSupplier(SupplierDTO $data)
     {
-        $data = $request->validated();
-        $supplier = $this->supplierRepository->create($data);
-        return new SupplierResource($supplier);
+        $supplier = $this->supplierRepository->create($data->toArray());
+        return $supplier;
     }
 
-    public function getSupplierById($id): SupplierResource
+    public function getSupplierById($id)
     {
         try{
             $supplier =  $this->supplierRepository->find($id);
         }catch(RecordNotFoundException $e){
             throw new RecordNotFoundException($e->getMessage());
         }
-        return new SupplierResource($supplier);
+        return $supplier;
     }
 
-    public function updateSupplier(SupplierUpdateRequest $request, $id): SupplierResource
+    public function updateSupplier(SupplierDTO $data)
     {
-        $data = $request->validated();
         try{
-            $updatedData = new SupplierResource($this->supplierRepository->update($id, $data));
+            $updatedData = $this->supplierRepository->update($data->getId(), $data->toArray());
         }catch(RecordNotFoundException $e){
             throw new RecordNotFoundException($e->getMessage());
         }
-        return new SupplierResource($updatedData);
+        return $updatedData;
     }
 
     public function deleteSupplier($id)
