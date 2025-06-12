@@ -1,54 +1,165 @@
-## Teste para Desenvolvedor PHP/Laravel
 
-Bem-vindo ao teste de desenvolvimento para a posição de Desenvolvedor PHP/Laravel. 
+# API de Fornecedores – Teste para Desenvolvedor PHP/Laravel
 
-O objetivo deste teste é desenvolver uma API Rest para o cadastro de fornecedores, permitindo a busca por CNPJ ou CPF, utilizando Laravel no backend.
+Este projeto consiste em uma API RESTful para o cadastro e gerenciamento de fornecedores, desenvolvida em Laravel como parte do teste técnico para a vaga de Desenvolvedor PHP/Laravel.
 
-## Descrição do Projeto
+## ✅ Funcionalidades
 
-### Backend (API Laravel):
+- CRUD de Fornecedores (Create, Read, Update, Delete)
+- Validação de CNPJ/CPF
+- Busca de informações do CNPJ via BrasilAPI
+- Filtros e ordenação na listagem
+- Paginação de resultados
+- Cache para otimizar performance (baseado em filtros)
+- Padrões aplicados:
+  - Service Layer
+  - Repository Pattern
+  - FormRequest
+  - Resource
+  - Cache implementado com `Cache::remember`
 
-#### CRUD de Fornecedores:
-- **Criar Fornecedor:**
-  - Permita o cadastro de fornecedores usando CNPJ ou CPF, incluindo informações como nome/nome da empresa, contato, endereço, etc.
-  - Valide a integridade e o formato dos dados, como o formato correto de CNPJ/CPF e a obrigatoriedade de campos.
+---
 
-- **Editar Fornecedor:**
-  - Facilite a atualização das informações de fornecedores, mantendo a validação dos dados.
+## 📦 Tecnologias
 
-- **Excluir Fornecedor:**
-  - Possibilite a remoção segura de fornecedores.
+- PHP 8.1+
+- Laravel 9.x
+- MySQL
+- Laravel Cache (filesystem)
+- BrasilAPI (consulta CNPJ)
 
-- **Listar Fornecedores:**
-  - Apresente uma lista paginada de fornecedores, com filtragem e ordenação.
+---
 
-#### Migrations:
-- Utilize migrations do Laravel para definir a estrutura do banco de dados, garantindo uma boa organização e facilidade de manutenção.
+## 🚀 Instalação e Execução
 
-## Requisitos
+Siga os passos abaixo para rodar o projeto localmente:
 
-### Backend:
-- Implementar busca por CNPJ na [BrasilAPI](https://brasilapi.com.br/docs#tag/CNPJ/paths/~1cnpj~1v1~1{cnpj}/get) ou qualquer outro endpoint público.
+### 1. Clonar o repositório
 
-## Tecnologias a serem utilizadas
-- Framework Laravel (PHP) 9.x ou superior
-- MySQL ou Postgres
+```bash
+git clone https://github.com/LeoPinhelli/teste-dev-php.git
+cd teste-dev-php
+git checkout teste-fornecedor
+```
 
-## Critérios de Avaliação
-- Adesão aos requisitos funcionais e técnicos.
-- Qualidade do código, incluindo organização, padrões de desenvolvimento e segurança.
-- Documentação do projeto, incluindo um README detalhado com instruções de instalação e operação.
+### 2. Instalar dependências
 
-## Bônus
-- Implementação de Repository Pattern.
-- Implementação de testes automatizados.
-- Dockerização do ambiente de desenvolvimento.
-- Implementação de cache para otimizar o desempenho.
+```bash
+composer install
+```
 
-## Entrega
-- Para iniciar o teste, faça um fork deste repositório; Se você apenas clonar o repositório não vai conseguir fazer push.
-- Crie uma branch com o nome que desejar;
-- Altere o arquivo README.md com as informações necessárias para executar o seu teste (comandos, migrations, seeds, etc);
-- Depois de finalizado, envie-nos o pull request;
+### 3. Criar o arquivo `.env`
 
+```bash
+cp .env.example .env
+```
 
+Edite o `.env` com suas configurações de banco de dados (MySQL). Exemplo:
+
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=fornecedores
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 4. Gerar chave da aplicação
+
+```bash
+php artisan key:generate
+```
+
+### 5. Rodar as migrations
+
+```bash
+php artisan migrate
+```
+
+### 6. Popular com dados fake (opcional)
+
+Se você tiver seeders configurados:
+
+```bash
+php artisan db:seed
+```
+
+---
+
+## 🧪 Rodar servidor de desenvolvimento
+
+```bash
+php artisan serve
+```
+
+A API estará disponível em:  
+📍 `http://localhost:8000/api/fornecedores`
+
+---
+
+## 🧾 Endpoints da API
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| GET    | `/api/fornecedores` | Lista paginada com filtros e ordenação |
+| POST   | `/api/fornecedores` | Criação de fornecedor (valida CNPJ/CPF) |
+| GET    | `/api/fornecedores/{id}` | Detalhes de um fornecedor |
+| PUT    | `/api/fornecedores/{id}` | Atualiza um fornecedor |
+| DELETE | `/api/fornecedores/{id}` | Remove um fornecedor |
+
+---
+
+## 🔁 Cache
+
+A listagem de fornecedores é armazenada em cache por 10 minutos com base nos filtros usados.  
+Ao criar, atualizar ou deletar um fornecedor, o cache é automaticamente limpo.
+
+---
+
+## 🧼 Limpeza de Cache Manual
+
+```bash
+php artisan cache:clear
+```
+
+---
+
+## 🧪 Testes (caso queira adicionar)
+
+```bash
+php artisan test
+```
+
+---
+
+## ❌ Docker
+
+Este projeto **não utiliza Docker**.
+
+---
+
+## 📬 Postman
+
+### Collection
+Você pode importar a collection para testar a API no Postman:
+
+[📁 Download da Collection](postman/fornecedores-api.postman_collection.json)
+
+### Ambiente (Opcional)
+[📁 Download do Ambiente](postman/fornecedores-api.postman_environment.json)
+
+Ou, se preferir, use links brutos do GitHub, como:
+[Download da Collection](https://github.com/LeoPinhelli/teste-dev-php/blob/teste-fornecedor/postman/fornecedores-api.postman_collection.json)
+
+---
+## 📮 Contato
+
+Leonardo Sotti Pinhelli  
+GitHub: [@LeoPinhelli](https://github.com/LeoPinhelli)
+
+Email: leopinhelli@gmail.com
+
+Telefone: 41 99638-9232
+
+Linkedin: [Leonardo Sotti Pinhelli](https://www.linkedin.com/in/leonardo-sotti-pinhelli/)
