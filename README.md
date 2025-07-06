@@ -1,54 +1,106 @@
-## Teste para Desenvolvedor PHP/Laravel
+## Revenda Mais - Projeto de testes
 
-Bem-vindo ao teste de desenvolvimento para a posição de Desenvolvedor PHP/Laravel. 
+### Pré-requisitos
+Docker instalado (https://www.docker.com)
+Git
 
-O objetivo deste teste é desenvolver uma API Rest para o cadastro de fornecedores, permitindo a busca por CNPJ ou CPF, utilizando Laravel no backend.
+Após clonar o projeto, siga as intruções abaixo:
 
-## Descrição do Projeto
+### 1 - Copiando o env
+```
+cp .env.example .env
+```
 
-### Backend (API Laravel):
+### 2 - Instalando dependências
+```
+sail composer install
+sail npm install && sail npm run build
+```
 
-#### CRUD de Fornecedores:
-- **Criar Fornecedor:**
-  - Permita o cadastro de fornecedores usando CNPJ ou CPF, incluindo informações como nome/nome da empresa, contato, endereço, etc.
-  - Valide a integridade e o formato dos dados, como o formato correto de CNPJ/CPF e a obrigatoriedade de campos.
+### 3 - Iniciando os serviços
+```
+./vendor/bin/sail up -d
+```
 
-- **Editar Fornecedor:**
-  - Facilite a atualização das informações de fornecedores, mantendo a validação dos dados.
-
-- **Excluir Fornecedor:**
-  - Possibilite a remoção segura de fornecedores.
-
-- **Listar Fornecedores:**
-  - Apresente uma lista paginada de fornecedores, com filtragem e ordenação.
-
-#### Migrations:
-- Utilize migrations do Laravel para definir a estrutura do banco de dados, garantindo uma boa organização e facilidade de manutenção.
-
-## Requisitos
-
-### Backend:
-- Implementar busca por CNPJ na [BrasilAPI](https://brasilapi.com.br/docs#tag/CNPJ/paths/~1cnpj~1v1~1{cnpj}/get) ou qualquer outro endpoint público.
-
-## Tecnologias a serem utilizadas
-- Framework Laravel (PHP) 9.x ou superior
-- MySQL ou Postgres
-
-## Critérios de Avaliação
-- Adesão aos requisitos funcionais e técnicos.
-- Qualidade do código, incluindo organização, padrões de desenvolvimento e segurança.
-- Documentação do projeto, incluindo um README detalhado com instruções de instalação e operação.
-
-## Bônus
-- Implementação de Repository Pattern.
-- Implementação de testes automatizados.
-- Dockerização do ambiente de desenvolvimento.
-- Implementação de cache para otimizar o desempenho.
-
-## Entrega
-- Para iniciar o teste, faça um fork deste repositório; Se você apenas clonar o repositório não vai conseguir fazer push.
-- Crie uma branch com o nome que desejar;
-- Altere o arquivo README.md com as informações necessárias para executar o seu teste (comandos, migrations, seeds, etc);
-- Depois de finalizado, envie-nos o pull request;
+### 4 - migration e seed
+```
+./vendor/bin/sail php artisan migrate
+./vendor/bin/sail php artisan db:seed
+```
 
 
+
+## Sobre o projeto
+O módulo RevendaMais tem 2 objetivos:
+- O primeiro é implementar um endpoint REST para gerenciar os dadso de fornecedores, sejam eles pessoas físicas ou jurídicas. 
+- O segundo implementar um facade para APIs de busca de informações de pessoas jurídicas. 
+
+Algumas considerações:
+- A opção de isolar em packages é apenas uma decisão de organização e demonstrar o uso da opção. 
+- Foi implementado apenas 1 caso de testes, que é a Rule do objeto de validação de documento (CPF/CNPJ)
+- Implementei a validação dentro do SupplierController e o ValidateDocument como um objeto separado para demonstrar o uso.
+- Não compreendi se a integração com a brasilapi tinha a intenção de completar os dados do cadastro de fornecedores ou apenas retornar os dados para a tela. Acabei optando pela segunda opção.
+- Deixei a API aberta. Não teria tempo de implementar o suporte de autenticação. 
+
+O teste esta na pasta padrão. Roda com o comando padrão:
+```
+./vendor/bin/sail php artisan test
+```
+
+## Endpoints
+
+Find:
+GET /revendamais/suppliers
+```
+curl --request GET \
+  --url 'http://127.0.0.1/revendamais/suppliers?document=74386567000184&order=name&direction=desc&limit=2'
+```
+
+Create:
+POST /revendamais/suppliers
+```
+curl --request POST \
+  --url http://127.0.0.1/revendamais/suppliers \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"document": "84719590000105",
+	"email": "empresa1@exemplo.com",
+	"name": "Empresa S/A",
+	"business_name": "Empresa"
+}'
+```
+
+Get:
+GET /revendamais/suppliers/{id}
+```
+curl --request GET \
+  --url http://127.0.0.1/revendamais/suppliers/2
+```
+
+Update:
+PUT /revendamais/suppliers/{id}
+```
+curl --request PUT \
+  --url http://127.0.0.1/revendamais/suppliers/2 \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"document": "20598877000133",
+	"email": "empresa4@exemplo.com",
+	"name": "Empresa 2 S/A",
+	"business_name": "Empresa 2"
+}'
+```
+
+Delete:
+DELETE /revendamais/suppliers/{id}
+```
+curl --request DELETE \
+  --url http://127.0.0.1/revendamais/suppliers/2
+```
+
+Busca de CNPJ:
+GET /revendamais/cnpj/{cnpj}
+```
+curl --request GET \
+  --url http://127.0.0.1/revendamais/cnpj/27865757000102
+```

@@ -1,0 +1,32 @@
+{
+  "name": "danielbastos/revendamais",
+  "description": "Access permission management",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Daniel Bastos",
+      "email": "danielaugustobastos@hotmail.com",
+      "homepage": "https://github.com/danielbastos"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "danielbastos\\revendamais\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^8.2",
+    "illuminate/support": "^12.0",
+    "guzzlehttp/guzzle": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "laravel": {
+      "providers": [
+        "danielbastos\\revendamais\\RevendaMaisServiceProvider"
+      ]
+    }
+  }
+}
