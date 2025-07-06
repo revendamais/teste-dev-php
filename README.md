@@ -1,61 +1,106 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Revenda Mais - Projeto de testes
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Pré-requisitos
+Docker instalado (https://www.docker.com)
+Git
 
-## About Laravel
+Após clonar o projeto, siga as intruções abaixo:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 1 - Copiando o env
+```
+cp .env.example .env
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 2 - Instalando dependências
+```
+sail composer install
+sail npm install && sail npm run build
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 3 - Iniciando os serviços
+```
+./vendor/bin/sail up -d
+```
 
-## Learning Laravel
+### 4 - migration e seed
+```
+./vendor/bin/sail php artisan migrate
+./vendor/bin/sail php artisan db:seed
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Sobre o projeto
+O módulo RevendaMais tem 2 objetivos:
+- O primeiro é implementar um endpoint REST para gerenciar os dadso de fornecedores, sejam eles pessoas físicas ou jurídicas. 
+- O segundo implementar um facade para APIs de busca de informações de pessoas jurídicas. 
 
-## Laravel Sponsors
+Algumas considerações:
+- A opção de isolar em packages é apenas uma decisão de organização e demonstrar o uso da opção. 
+- Foi implementado apenas 1 caso de testes, que é a Rule do objeto de validação de documento (CPF/CNPJ)
+- Implementei a validação dentro do SupplierController e o ValidateDocument como um objeto separado para demonstrar o uso.
+- Não compreendi se a integração com a brasilapi tinha a intenção de completar os dados do cadastro de fornecedores ou apenas retornar os dados para a tela. Acabei optando pela segunda opção.
+- Deixei a API aberta. Não teria tempo de implementar o suporte de autenticação. 
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+O teste esta na pasta padrão. Roda com o comando padrão:
+```
+./vendor/bin/sail php artisan test
+```
 
-### Premium Partners
+## Endpoints
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Find:
+GET /revendamais/suppliers
+```
+curl --request GET \
+  --url 'http://127.0.0.1/revendamais/suppliers?document=74386567000184&order=name&direction=desc&limit=2'
+```
 
-## Contributing
+Create:
+POST /revendamais/suppliers
+```
+curl --request POST \
+  --url http://127.0.0.1/revendamais/suppliers \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"document": "84719590000105",
+	"email": "empresa1@exemplo.com",
+	"name": "Empresa S/A",
+	"business_name": "Empresa"
+}'
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Get:
+GET /revendamais/suppliers/{id}
+```
+curl --request GET \
+  --url http://127.0.0.1/revendamais/suppliers/2
+```
 
-## Code of Conduct
+Update:
+PUT /revendamais/suppliers/{id}
+```
+curl --request PUT \
+  --url http://127.0.0.1/revendamais/suppliers/2 \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"document": "20598877000133",
+	"email": "empresa4@exemplo.com",
+	"name": "Empresa 2 S/A",
+	"business_name": "Empresa 2"
+}'
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Delete:
+DELETE /revendamais/suppliers/{id}
+```
+curl --request DELETE \
+  --url http://127.0.0.1/revendamais/suppliers/2
+```
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Busca de CNPJ:
+GET /revendamais/cnpj/{cnpj}
+```
+curl --request GET \
+  --url http://127.0.0.1/revendamais/cnpj/27865757000102
+```

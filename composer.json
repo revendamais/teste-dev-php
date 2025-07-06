@@ -10,6 +10,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+	    "danielbastos/revendamais": "@dev",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1"
     },
@@ -31,7 +32,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "danielbastos\\revendamais\\": "packages/danielbastos/revendamais/"
         }
     },
     "scripts": {
@@ -59,9 +61,19 @@
             "@php artisan test"
         ]
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/danielbastos/revendamais",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [],
+            "providers": []
         }
     },
     "config": {
