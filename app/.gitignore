@@ -1,0 +1,7 @@
+.cache
+.vscode-server
+html
+.gitconfig
+.composer
+.psql_history
+.bash_history
