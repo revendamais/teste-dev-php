@@ -1,0 +1,29 @@
+	
+Processo de conexão(serve para as comunicações com o 
+AMT Remoto - Rec IP - Central):
+
+ AMT Remoto -> Rec IP: 02:e0:01:1c
+ Rec IP -> AMT Remoto: 02:e0:01:1c
+
+ AMT Remoto -> Rec IP: 06:e3:45:30:31:30:34:5a
+ Rec IP -> AMT Remoto: 02:e3:01:1f
+
+ AMT Remoto -> Rec IP: 06:e4:45:30:31:30:34:5d
+ Rec IP -> AMT Remoto: 02:e4:01:18
+
+--------------------------------------------------------------------
+
+Despois de estar conectado, o Rec IP re-enviará todos os 
+dados que chegarem. 
+
+ AMT Remoto -> Rec IP: 05:e7:01:10:06:60:6a
+ Rec IP -> Central:    05:e7:01:10:06:60:6a
+ Central -> Rec IP:    05:e7:01:90:85:63:6a
+ Rec IP -> AMT Remoto: 05:e7:01:90:85:63:6a
+
+ AMT Remoto -> Rec IP: 06:e7:02:19:10:d6:4b:88
+ Rec IP -> Central:    06:e7:02:19:10:d6:4b:88
+ Central -> Rec IP:    06:e7:02:99:00:d6:21:72
+ Rec IP -> AMT Remoto: 06:e7:02:99:00:d6:21:72
+ 
+--------------------------------------------------------------------

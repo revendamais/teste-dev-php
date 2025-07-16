@@ -1,0 +1,5 @@
+• 1 Passo: calcular a operação XOR com todos os dados do comando. 
+	o Ex: 09 ^ E7 ^ 05 ^ 11 ^ 87 ^ 87 ^ 87 ^ 34 ^ EB ^ 1C = BE
+	
+• 2 Passo: fazer o complemento 1 do resultado (operação XOR do resultado com FF). 
+	o Ex: BE ^ FF = 41

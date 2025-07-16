@@ -1,0 +1,76 @@
+// -----------------------------------------------------------------------------------------------
+/*Definições das variaveis utilizadas*/
+union
+{
+	unsigned char Bytes[4];
+	unsigned long Full;
+
+	struct
+	{
+		unsigned Buff:8;
+		unsigned CRC_Lo:8;
+		unsigned CRC_Hi:8;
+		unsigned Carry:1;
+	};
+} CRC;
+
+
+int CRCByteCount;
+
+/******** CS EXTERNO SOMENTE 1 BYTE **************/
+uint8_t calcula_xor(uint8_t *buf, uint8_t size)
+{
+	uint8_t xor = 0;
+
+	for(uint8_t i=0 ; i
+	{
+		xor ^= (*buf);
+		buf++;
+	}
+
+	xor ^= 0xFF;
+	return xor;
+}
+
+/************ CS INTERNO 2 BYTES ***************/
+uint16_t calcula_crc(uint8_t *b, uint8_t len)
+{
+	CRC.Full =0; 
+	CRCByteCount =0; 
+
+	uint8_t i;
+
+	for(i=0 ; i < len; i++)
+	{
+		cal_CRC(*b);
+		b++;
+	}
+
+	cal_CRC(0);
+	cal_CRC(0);
+
+	return ((CRC.CRC_Hi<CRC_Lo));
+}
+
+/********** Função apoio CS INTERNO *************/
+void cal_CRC(char c)
+{
+	unsigned char i;
+
+	CRC.Bytes[2-CRCByteCount]=c; 
+
+	if(CRCByteCount <2)
+	{
+		CRCByteCount ++;
+	}
+	else 
+	{
+		for(i=0; i<=7; i++) 
+		{
+			CRC.Full<<=1;
+			if(CRC.Carry) 
+			CRC. Full ^=0x00800500; 
+		}
+	}
+}
+// -----------------------------------------------------------------------------------------------

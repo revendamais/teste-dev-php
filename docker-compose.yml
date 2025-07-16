@@ -1,0 +1,52 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: app.dockerfile
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    ports:
+      - 1000:80
+  
+  db:
+    image: mysql:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: 'laravel_db'
+      MYSQL_USER: 'laravel_user'
+      MYSQL_PASSWORD: 'Laravel'
+      MYSQL_ROOT_PASSWORD: 'Laravel'
+    ports:
+      - "3308:3306"
+    expose:
+      - "3308"
+    volumes:
+      - ./my-db:/var/lib/mysql
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: unless-stopped
+    links:
+      - db
+    environment:
+      PMA_ARBITRARY: 1
+    volumes:
+      - ./php-make/upload.ini:/usr/local/etc/php/php.ini
+    ports:
+      - 10001:80
+
+volumes:
+  my-db:
+
+networks:
+  default:
+    external:
+      name: laravelapp
