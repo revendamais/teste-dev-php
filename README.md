@@ -1,54 +1,162 @@
-## Teste para Desenvolvedor PHP/Laravel
+# Teste Dev PHP RevendaMais - Gestão de Fornecedores
 
-Bem-vindo ao teste de desenvolvimento para a posição de Desenvolvedor PHP/Laravel. 
+Este projeto é uma API REST desenvolvida em Laravel para cadastro, listagem, atualização e exclusão de fornecedores. Também há integração com a [BrasilAPI](https://brasilapi.com.br/) para consulta de CNPJ.
 
-O objetivo deste teste é desenvolver uma API Rest para o cadastro de fornecedores, permitindo a busca por CNPJ ou CPF, utilizando Laravel no backend.
+---
 
-## Descrição do Projeto
+## 🔧 Requisitos
 
-### Backend (API Laravel):
+- PHP >= 8.1
+- Composer
+- MySQL
+- Extensões do PHP: OpenSSL, PDO, Mbstring, Tokenizer, XML, Ctype, JSON, BCMath, Curl
 
-#### CRUD de Fornecedores:
-- **Criar Fornecedor:**
-  - Permita o cadastro de fornecedores usando CNPJ ou CPF, incluindo informações como nome/nome da empresa, contato, endereço, etc.
-  - Valide a integridade e o formato dos dados, como o formato correto de CNPJ/CPF e a obrigatoriedade de campos.
+---
 
-- **Editar Fornecedor:**
-  - Facilite a atualização das informações de fornecedores, mantendo a validação dos dados.
+## 🚀 Instalação
 
-- **Excluir Fornecedor:**
-  - Possibilite a remoção segura de fornecedores.
+1. Abra o terminal na raiz do projeto e instale as dependências com o Composer:
 
-- **Listar Fornecedores:**
-  - Apresente uma lista paginada de fornecedores, com filtragem e ordenação.
+```bash
+composer install
+```
 
-#### Migrations:
-- Utilize migrations do Laravel para definir a estrutura do banco de dados, garantindo uma boa organização e facilidade de manutenção.
+2. Copie o arquivo de exemplo de ambiente:
 
-## Requisitos
+```bash
+cp .env.example .env
+```
 
-### Backend:
-- Implementar busca por CNPJ na [BrasilAPI](https://brasilapi.com.br/docs#tag/CNPJ/paths/~1cnpj~1v1~1{cnpj}/get) ou qualquer outro endpoint público.
+3. Gere a chave da aplicação:
 
-## Tecnologias a serem utilizadas
-- Framework Laravel (PHP) 9.x ou superior
-- MySQL ou Postgres
+```bash
+php artisan key:generate
+```
 
-## Critérios de Avaliação
-- Adesão aos requisitos funcionais e técnicos.
-- Qualidade do código, incluindo organização, padrões de desenvolvimento e segurança.
-- Documentação do projeto, incluindo um README detalhado com instruções de instalação e operação.
+4. Configure o `.env` com os dados do seu banco de dados MySQL:
 
-## Bônus
-- Implementação de Repository Pattern.
-- Implementação de testes automatizados.
-- Dockerização do ambiente de desenvolvimento.
-- Implementação de cache para otimizar o desempenho.
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=revendamais
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-## Entrega
-- Para iniciar o teste, faça um fork deste repositório; Se você apenas clonar o repositório não vai conseguir fazer push.
-- Crie uma branch com o nome que desejar;
-- Altere o arquivo README.md com as informações necessárias para executar o seu teste (comandos, migrations, seeds, etc);
-- Depois de finalizado, envie-nos o pull request;
+5. Crie o schema `revendamais` no MySQL manualmente (ou pelo phpMyAdmin ou client MySQL).
 
+6. Execute as migrations para criar as tabelas:
+
+```bash
+php artisan migrate
+```
+
+---
+
+## 🧪 Executando o servidor local
+
+```bash
+php artisan serve
+```
+
+A API estará disponível em `http://localhost:8000`
+
+---
+
+## 🔁 Endpoints disponíveis
+
+### Fornecedores
+
+| Método | Rota | Descrição |
+|--------|------|----------|
+| GET    | `/api/cnpj/{cnpj}` | busca dados do CNPJ no BrasilAPI e retorna em json pronto para o insert (Apenas números) |
+| GET    | `/api/fornecedores` | Lista todos os fornecedores (com paginação e filtros) |
+| GET    | `/api/fornecedor/{id}` | Detalha um fornecedor específico |
+| POST   | `/api/fornecedor` | Cria um novo fornecedor |
+| PUT    | `/api/fornecedor/{id}` | Atualiza um fornecedor existente (exceto CNPJ) |
+| DELETE | `/api/fornecedor/{id}` | Remove um fornecedor |
+
+---
+
+## 📦 Exemplo de Payload para busca com paginação
+
+`GET /api/fornecedores?page=2&per_page=15`
+
+---
+
+## 📦 Exemplo de Payload para busca com filtro
+
+`GET /api/fornecedores?nome=joão&email=gmail.com&sort_by=nome&sort_order=asc`
+
+---
+
+## 📦 Exemplo de Payload para criação de fornecedor
+
+```json
+{
+  "nome": "Empresa ABC",
+  "contato_numero": "11999999999",
+  "contato_nome": "Fulano",
+  "endereco_cep": "01310000",
+  "endereco_rua": "Rua da Empresa",
+  "endereco_numero": 123,
+  "endereco_cidade": "São Paulo",
+  "endereco_estado": "SP",
+  "email": "contato@empresaabc.com",
+  "cnpj": "00728551000176",
+  "cpf": "12345678900"
+}
+```
+
+---
+
+## 🌐 Integração com BrasilAPI
+
+Ao consultar um CNPJ, utilize a URL:
+
+```
+https://brasilapi.com.br/api/cnpj/v1/{cnpj}
+```
+
+É possível usar o Guzzle HTTP Client para consumir e tratar os dados. Certifique-se de configurar corretamente o certificado SSL do cURL no seu ambiente local (caso encontre erro `cURL error 60`).
+
+---
+
+## 🐛 Logs e Debug
+
+- Arquivo de logs: `storage/logs/laravel.log`
+- Para visualizar erros detalhados, defina no `.env`:
+
+```dotenv
+APP_DEBUG=true
+```
+---
+
+## 👨‍💻 Padrão de Projeto
+
+Este projeto utiliza o **Repository Pattern** para desacoplar a lógica de acesso a dados dos controllers.
+
+---
+
+## 📁 Estrutura de Pastas Importantes
+
+- `app/Http/Controllers/FornecedorController.php`: Lógica de controle da API
+- `app/Repositories/FornecedorRepository.php`: Camada de acesso aos dados
+- `app/Repositories/FornecedorRepositoryIntervafe.php`: Interface do Repository
+- `app/Services/BrasilApiService.php`: Lógica de integração com serviço externo
+- `app/Models/Fornecedor.php`: Modelo da entidade
+- `routes/api.php`: Definição das rotas públicas da API
+
+---
+
+## ✅ Testando a API
+
+Você pode usar ferramentas como:
+
+- [Postman](https://www.postman.com/)
+- [Insomnia](https://insomnia.rest/)
+- cURL via terminal
+
+---
 
